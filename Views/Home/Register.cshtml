@@ -1,0 +1,60 @@
+﻿@model Pathology.Models.Employee
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+
+    <table align="center" cellpadding="10">
+        <tr>
+            <td>First name</td>
+            <td><input id="Text1" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Last name</td>
+            <td><input id="Text2" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input id="Text3" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Adhar ID</td>
+            <td><input id="Text5" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Qualification</td>
+            <td><input id="Text6" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input id="Password1" type="password" /></td>
+        </tr>
+        <tr>
+            <td>Confirm Password</td>
+            <td><input id="Password2" type="password" /></td>
+        </tr>
+        <tr>
+            <td>Joining date</td>
+            <td>
+                @Html.EditorFor(model => model.joinDate)
+            </td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>
+                <select id="Select1" class="btn-success">
+                    <option value="Doctor">Doctor</option>
+                    <option value="LabAssistant">Lab Assistant</option>
+                    <option value="DeskStaff">Desk Staff</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right"><input id="Button1" type="button" value="Clear" class="btn btn-outline-success" /></td>
+            <td align="left"><input id="Button2" type="button" value="Submit" class="btn btn-outline-success" /></td>
+        </tr>
+    </table>
+</div>
+
+
