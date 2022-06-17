@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pathology.Models;
+using Pathology.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,6 +41,15 @@ namespace Pathology.Controllers
 
         public IActionResult Register()
         {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Register(RegisterVM employee)
+        {
+            if (ModelState.IsValid)
+            {
+                return View();
+            }
             return View();
         }
 
