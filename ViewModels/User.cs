@@ -16,7 +16,7 @@ namespace Pathology.ViewModels
 
         public string qualification { get; set; }
 
-        public int adharId { get; set; }
+        public string adharId { get; set; }
 
         public DateTime joinDate { get; set; }
     }

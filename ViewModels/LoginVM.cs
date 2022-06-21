@@ -13,5 +13,8 @@ namespace Pathology.ViewModels
 
         [Required]
         public string pwd { get; set; }
+
+        [Display(Name = "Remember Me")]
+        public bool rememberMe { get; set; }
     }
 }

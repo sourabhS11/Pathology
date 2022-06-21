@@ -8,8 +8,6 @@ namespace Pathology.ViewModels
 {
     public class RegisterVM
     {
-        public int ID { get; set; }
-
         [Required]
         public string fName { get; set; }
 
@@ -30,22 +28,19 @@ namespace Pathology.ViewModels
         public string role { get; set; }
 
         [Required]
-        [Compare("Cpwd", ErrorMessage = "Passwords dont match")]
         public string pwd { get; set; }
         [Required]
+        [Compare("pwd", ErrorMessage = "Passwords dont match")]
         public string Cpwd { get; set; }
 
         [Required]
-        [MaxLength(12, ErrorMessage = "12 digits only")]
-        [MinLength(12, ErrorMessage = "12 digits only")]
-        public int adharId { get; set; }
+        //[MaxLength(12, ErrorMessage = "12 digits only")]
+        //[MinLength(12, ErrorMessage = "12 digits only")]
+        public string adharId { get; set; }
 
         [Required]
         [Display(Name = "Date of joining")]
         [DataType(DataType.Date)]
         public DateTime joinDate { get; set; }
-
     }
-
-
 }

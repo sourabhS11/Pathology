@@ -39,7 +39,8 @@ namespace Pathology
             services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequiredLength = 8;
-                
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
+
             })
            .AddEntityFrameworkStores<AppDBcontext>()
            .AddDefaultTokenProviders();

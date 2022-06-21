@@ -4,62 +4,129 @@
 }
 <div class="text-center">
     <h1>@ViewData["Title"]</h1>
-    <form asp-controller="home" asp-action="create" method="post">
-        <table align="center" cellpadding="10" style="border-style:solid" class="border-success">
-            <tr>
-                <td>First name</td>
-                <td><input id="Text1" type="text" />
-                    <span asp-validation-for="fName"></span>
-                </td>
+    <form method="post">
 
-            </tr>
-            <tr>
-                <td>Last name</td>
-                <td><input id="Text2" type="text" /></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input id="Text3" type="text" /></td>
-            </tr>
-            <tr>
-                <td>Adhar ID</td>
-                <td><input id="Text5" type="text" /></td>
-            </tr>
-            <tr>
-                <td>Qualification</td>
-                <td><input id="Text6" type="text" /></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input id="Password1" type="password" /></td>
-            </tr>
-            <tr>
-                <td>Confirm Password</td>
-                <td><input id="Password2" type="password" /></td>
-            </tr>
-            <tr>
-                <td>Joining date</td>
-                <td>
-                    @Html.EditorFor(model => model.joinDate)
-                </td>
-            </tr>
-            <tr>
-                <td>Role</td>
-                <td>
-                    <select id="Select1" class="border-dark">
-                        <option value="Doctor">Doctor</option>
-                        <option value="LabAssistant">Lab Assistant</option>
-                        <option value="DeskStaff">Desk Staff</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-        <table align="center" cellpadding="20">
-            <tr>
-                <td align="right"><input id="Button1" type="button" value="Clear" class="btn btn-outline-success" /></td>
-                <td align="left"><input id="Button2" type="button" value="Submit" class="btn btn-outline-success" /></td>
-            </tr>
-        </table>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+
+            <table align="center" cellpadding="10" style="border-style:solid" class="border-primary">
+                <tr>
+                    <td>
+                        <label asp-for="fName" class="control-label">First Name</label>
+                    </td>
+                    <td>
+                        <input asp-for="fName" class="form-control" />
+                        <span asp-validation-for="fName" class="text-danger"></span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="lName" class="control-label">Last Name</label>
+                    </td>
+                    <td>
+                        <input asp-for="lName" class="form-control" />
+                        <span asp-validation-for="lName" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="email" class="control-label">Email</label>
+                    </td>
+                    <td>
+                        <input type="email" asp-for="email" class="form-control" />
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="addrs" class="control-label">Address</label>
+                    </td>
+                    <td>
+                        <input asp-for="addrs" class="form-control" />
+                        <span asp-validation-for="addrs" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="adharId" class="control-label">Aadhar ID</label>
+                    </td>
+                    <td>
+                        <input asp-for="adharId" class="form-control" />
+                        <span asp-validation-for="adharId" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="qualification" class="control-label">Qualification</label>
+                    </td>
+                    <td>
+                        <input asp-for="qualification" class="form-control" />
+                        <span asp-validation-for="qualification" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="pwd" class="control-label">Password</label>
+                    </td>
+                    <td>
+                        <input type="password" asp-for="pwd" class="form-control" />
+                        <span asp-validation-for="pwd" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Cpwd" class="control-label">Confirm Password</label>
+                    </td>
+                    <td>
+                        <input type="password" asp-for="Cpwd" class="form-control" />
+                        <span asp-validation-for="Cpwd" class="text-danger"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="joinDate" class="control-label">Date of Joining</label>
+                    </td>
+                    <td>
+                        <input type="date" asp-for="joinDate" class="form-control" />
+                        <span asp-validation-for="joinDate" class="text-danger"></span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="role" class="control-label">Role</label>
+                    </td>
+                    <td>
+                        <select asp-for="role" class="form-control">
+                            <option>Choose</option>
+                            <option value="Associated Doctor">Associated Doctor</option>
+                            <option value="Lab Assistant">Lab Assistant</option>
+                            <option value="Desk Staff">Desk Staff</option>
+                        </select>
+                        <span asp-validation-for="role" class="text-danger"></span>
+                    </td>
+                </tr>
+            </table>
+            <table align="center" cellpadding="20">
+                <tr>
+                    <td align="right">
+                        <div class="form-group">
+                            <input type="reset" value="Clear" class="btn btn-primary" />
+                        </div>
+                    </td>
+                    <td align="left">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+
     </form>
 </div>
 
