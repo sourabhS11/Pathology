@@ -59,7 +59,18 @@ namespace Pathology.Controllers
                 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (User.IsInRole("Associated Doctor"))
+                    {
+                        return RedirectToAction("DashAD", "Account");
+                    }
+                    if (User.IsInRole("Lab Assistant"))
+                    {
+                        return RedirectToAction("DashLA", "Account");
+                    }
+                    if (User.IsInRole("Desk Staff"))
+                    {
+                        return RedirectToAction("DashDS", "Account");
+                    }
                 }
                     
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");               
