@@ -1,0 +1,61 @@
+﻿@using Pathology.ViewModels;
+@model UserData
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+<div class="text-center"><h1>Edit User</h1></div>
+
+<form method="post" class="mt-3">
+    <div class=" form-group">
+        <table align="center" cellpadding="10" style="border-style:solid" class="border-primary">
+            <tr>
+                <td>
+                    <label asp-for="fName" class="col-form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="fName" class="form-control">
+                    <span asp-validation-for="fName" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="lName" class="col-form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="lName" class="form-control">
+                    <span asp-validation-for="lName" class="text-danger"></span>
+                </td>
+            </tr>           
+            <tr>
+                <td>
+                    <label asp-for="Roles" class="col-form-label"></label>
+                </td>
+                <td>
+                    <select asp-for="Roles" class="form-control">
+                        <option selected hidden>@Model.Roles</option>
+                        <option value="Associated Doctor">Associated Doctor</option>
+                        <option value="Lab Assistant">Lab Assistant</option>
+                        <option value="Desk Staff">Desk Staff</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </td>
+            </tr>
+        </table>
+        <table align="center" cellpadding="20">
+            <tr>
+                <td align="right">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+                <td align="left">
+                    <a asp-action="UserMgmt" class="btn btn-primary">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>

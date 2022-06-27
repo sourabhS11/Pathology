@@ -73,7 +73,7 @@ namespace Pathology.Controllers
                     }
                 }
                     
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");               
+                ModelState.AddModelError("", "Invalid Login Attempt");               
             }
             return View(model);
         }
@@ -107,6 +107,11 @@ namespace Pathology.Controllers
                         }
                     }
 
+                    if (SignInManager.IsSignedIn(User))
+                    {
+                        return RedirectToAction("UserMgmt", "Account");
+                    }
+
                     await SignInManager.SignInAsync(Newuser, isPersistent:false );
                     return RedirectToAction("Index", "Home");
                 }
@@ -118,7 +123,7 @@ namespace Pathology.Controllers
             return View(model);
         }
 
-        //post gives 405 error
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await SignInManager.SignOutAsync();

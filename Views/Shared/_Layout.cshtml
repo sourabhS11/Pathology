@@ -26,6 +26,20 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Aboutus">About us</a>
+                    </li>                   
+                    <li>
+                        @if (User.IsInRole("Associated Doctor"))
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="DashAD">Dashboard</a>
+                        }
+                        @if (User.IsInRole("Lab Assistant"))
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="DashLA">Dashboard</a>
+                        }
+                        @if (User.IsInRole("Desk Staff"))
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="DashDS">Dashboard</a>
+                        }
                     </li>
                 </ul>
                 <div class="collapse navbar-collapse justify-content-end">
@@ -37,7 +51,7 @@
                             </li>
                             <li class="nav-item">
                                 <form method="post">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                                    <button type="submit"  class="nav-link text-dark bg-info border-0" asp-area="" asp-controller="Home" asp-action="Logout">Logout</button>
                                 </form>
                             </li>
                         }

@@ -34,8 +34,8 @@ namespace Pathology.ViewModels
         public string Cpwd { get; set; }
 
         [Required]
-        //[MaxLength(12, ErrorMessage = "12 digits only")]
-        //[MinLength(12, ErrorMessage = "12 digits only")]
+        [MaxLength(12, ErrorMessage = "12 digits only")]
+        [MinLength(12, ErrorMessage = "12 digits only")]
         public string adharId { get; set; }
 
         [Required]
