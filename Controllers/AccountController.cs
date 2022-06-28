@@ -35,12 +35,19 @@ namespace Pathology.Controllers
             return View();
         }
 
-        public IActionResult UserMgmt()
+        public async Task<IActionResult> UserMgmtAsync()
         {
             var users = userManager.Users;
-            var roles = roleManager.Roles;
 
-            return View(users);
+            List<UserData> UserDataList = new List<UserData>();
+
+            foreach (var u in users)
+            {
+                var uRole = await userManager.GetRolesAsync(u);
+                UserDataList.Add(new UserData(u.Id, u.fName, u.lName, u.Email, u.joinDate, uRole));
+            }
+
+            return View(UserDataList);
         }
 
         [HttpGet]
@@ -57,14 +64,14 @@ namespace Pathology.Controllers
             var userRoles = await userManager.GetRolesAsync(user);
 
             var model = new UserData
-            {
-                Id = user.Id,
-                fName = user.fName,
-                lName = user.lName,
-                Email = user.Email,
-                joinDate = user.joinDate,
-                Roles = userRoles
-            };
+            (
+                user.Id,
+                user.fName,
+                user.lName,
+                user.Email,
+                user.joinDate,
+                userRoles
+            );
 
             return View(model);
         }

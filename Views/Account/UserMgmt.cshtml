@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Pathology.ViewModels.User>
+﻿@model IEnumerable<Pathology.ViewModels.UserData>
 
 @{
     ViewData["Title"] = "UserMgmt";
@@ -27,7 +27,7 @@
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
                 <th>
-                    Role
+                    @Html.DisplayNameFor(model => model.Roles)
                 </th>
                 <th>
                     Action
@@ -51,7 +51,7 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    role
+                    @Html.DisplayFor(modelItem => item.Roles)
                 </td>
                 <td>
                     <form method="post" asp-action="DeleteUser" asp-route-id="@item.Id">
@@ -80,5 +80,4 @@ else
     <div class="text-warning">
         <p>No users created yet</p>
     </div>
-
 }

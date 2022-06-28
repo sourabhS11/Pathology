@@ -13,6 +13,17 @@ namespace Pathology.ViewModels
         {
             Roles = new List<string>();
         }
+
+        public UserData(Guid Id, string fName, string lName, string Email, DateTime joinDate, IList<string> Roles)
+        {
+            this.Id = Id;
+            this.fName = fName;
+            this.lName = lName;
+            this.Email = Email;
+            this.joinDate = joinDate;
+            this.Roles = Roles;
+
+        }
         [Required]
         public string fName { get; set; }
 

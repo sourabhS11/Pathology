@@ -36,18 +36,13 @@ namespace Pathology
             sqlOptions.EnableRetryOnFailure();
             }));
 
-            services.AddIdentity<User, Role>(options =>
-            {
-                options.Password.RequiredLength = 8;
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/";
-
-            })
-           .AddEntityFrameworkStores<AppDBcontext>()
-           .AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>().
+                AddEntityFrameworkStores<AppDBcontext>().
+                AddDefaultTokenProviders();
 
             //services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDBcontext>();
 
-            //services.AddControllersWithViews();
+            services.AddControllersWithViews();
 
             // services.AddDbContextPool<AppDBcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
