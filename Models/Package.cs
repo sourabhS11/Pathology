@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,9 +8,13 @@ namespace Pathology.Models
 {
     public class Package
     {
-        public int packageID { get; set; }
-        public string packageName { get; set; }
-        public string packageDescription { get; set; }
-        public int packagrPrice { get; set; }
+        [Key]
+        public int PackageID { get; set; }
+
+        public string PackageName { get; set; }
+
+        public string PackageDescription { get; set; }
+
+        public int PackagrPrice { get; set; }
     }
 }

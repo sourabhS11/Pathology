@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Pathology.Models.Package>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" align="center">
+    <thead style="background-color:aqua">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PackageName)
+            </th>
+            <th width="400">
+                @Html.DisplayNameFor(model => model.PackageDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PackagrPrice)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td rowspan="3">
+                    @Html.DisplayFor(modelItem => item.PackageName)
+                </td>
+                <td rowspan="3">
+                    @Html.DisplayFor(modelItem => item.PackageDescription)
+                </td>
+                <td rowspan="3">
+                    @Html.DisplayFor(modelItem => item.PackagrPrice)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PackageID" class="btn btn-primary w-50">Edit</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.PackageID" class="btn btn-success w-50">Details</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.PackageID" class="btn btn-danger w-50">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+</table>

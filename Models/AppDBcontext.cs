@@ -14,6 +14,12 @@ namespace Pathology.Models
         {
 
         }
-        
+
+        public DbSet<Package> Packages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

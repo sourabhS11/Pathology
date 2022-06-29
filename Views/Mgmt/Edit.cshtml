@@ -1,0 +1,60 @@
+﻿@model Pathology.Models.Package
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="text-center">
+    <h1>Edit Package</h1>
+</div>
+<hr />
+
+<form asp-action="Edit">
+    <table align="center" width="400">
+        <tr>
+            <td>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="PackageID" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="PackageName" class="control-label"></label>
+                    <input asp-for="PackageName" class="form-control" />
+                    <span asp-validation-for="PackageName" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="PackageDescription" class="control-label"></label>
+                    <textarea asp-for="PackageDescription" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="PackageDescription" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="PackagrPrice" class="control-label"></label>
+                    <input asp-for="PackagrPrice" class="form-control" />
+                    <span asp-validation-for="PackagrPrice" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+
