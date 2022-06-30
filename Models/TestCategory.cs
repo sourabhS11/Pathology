@@ -11,8 +11,10 @@ namespace Pathology.Models
         [Key]
         public int TestCategoryID { get; set; }
 
+        [Required]
         public string TestCategoryName { get; set; }
 
+        [Required]
         public string TestCategoryDescription { get; set; }
 
     }

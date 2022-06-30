@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Pathology.ViewModels;
+using Pathology.Models;
 
 namespace Pathology.Models
 {
@@ -21,5 +22,9 @@ namespace Pathology.Models
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<TestCategory> TestCategory { get; set; }
+
+        public DbSet<Pathology.Models.Patient> Patient { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pathology.Models;
 
 namespace Pathology.Migrations
 {
     [DbContext(typeof(AppDBcontext))]
-    partial class AppDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20220629121013_TestCategories")]
+    partial class TestCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,33 +141,6 @@ namespace Pathology.Migrations
                     b.HasKey("PackageID");
 
                     b.ToTable("Packages");
-                });
-
-            modelBuilder.Entity("Pathology.Models.Patient", b =>
-                {
-                    b.Property<int>("PatientID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PatientAadharID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PatientEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PatientHealthIssues")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PatientName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PatientID");
-
-                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("Pathology.Models.TestCategory", b =>
