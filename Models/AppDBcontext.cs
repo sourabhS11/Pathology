@@ -25,6 +25,8 @@ namespace Pathology.Models
 
         public DbSet<TestCategory> TestCategory { get; set; }
 
-        public DbSet<Pathology.Models.Patient> Patient { get; set; }
+        public DbSet<Patient> Patient { get; set; }
+
+        public DbSet<TestMgmt> TestMgmt { get; set; }
     }
 }

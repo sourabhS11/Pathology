@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Pathology.Models.TestMgmt>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead style="background-color:aqua">
+        <tr>
+            <th>
+                Test Name
+            </th>
+            <th>
+                Test Price
+            </th>
+            <th>
+                Test Category Name
+            </th>
+            <th width="400">
+                Package Name
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestCategory.TestCategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Package.PackageName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TestId" class="btn btn-primary">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.TestId" class="btn btn-success">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.TestId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

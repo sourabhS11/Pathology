@@ -13,13 +13,13 @@
     <thead style="background-color:aqua">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PackageName)
+                Package Name
             </th>
             <th width="400">
-                @Html.DisplayNameFor(model => model.PackageDescription)
+                Package Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PackagrPrice)
+                Package Price
             </th>
             <th>
                 Action
@@ -30,28 +30,22 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td rowspan="3">
+                <td>
                     @Html.DisplayFor(modelItem => item.PackageName)
                 </td>
-                <td rowspan="3">
+                <td>
                     @Html.DisplayFor(modelItem => item.PackageDescription)
                 </td>
-                <td rowspan="3">
+                <td>
                     @Html.DisplayFor(modelItem => item.PackagrPrice)
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.PackageID" class="btn btn-primary w-50">Edit</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.PackageID" class="btn btn-success w-50">Details</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.PackageID" class="btn btn-danger w-50">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.PackageID" class="btn btn-primary">Edit</a>
+                
+                    <a asp-action="Details" asp-route-id="@item.PackageID" class="btn btn-success">Details</a>
+
+                    <a asp-action="Delete" asp-route-id="@item.PackageID" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
             }

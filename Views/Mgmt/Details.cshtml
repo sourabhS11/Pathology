@@ -11,19 +11,19 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PackageName)
+            Package Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PackageName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PackageDescription)
+        <dt class="col-sm-2">
+            Package Description
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PackageDescription)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PackagrPrice)
+            Package Price
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PackagrPrice)
@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PackageID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.PackageID" class="btn btn-primary">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

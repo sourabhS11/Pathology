@@ -1,0 +1,67 @@
+﻿@model Pathology.Models.TestMgmt
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="text-center">
+    <h1>Create New Test</h1>
+    <hr />
+</div>
+
+<form asp-action="Create">
+    <table align="center" width="400">
+        <tr>
+            <td>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="TestName" class="control-label">Test Name</label>
+                    <input asp-for="TestName" class="form-control" />
+                    <span asp-validation-for="TestName" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="TestPrice" class="control-label">Test Price</label>
+                    <input asp-for="TestPrice" class="form-control" />
+                    <span asp-validation-for="TestPrice" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="TestCategoryID" class="control-label">Test Category</label>
+                    <select asp-for="TestCategoryID" class="form-control" asp-items="ViewBag.TestCategoryID"></select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="PackageID" class="control-label">Package</label>
+                    <select asp-for="PackageID" class="form-control" asp-items="ViewBag.PackageID"></select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+

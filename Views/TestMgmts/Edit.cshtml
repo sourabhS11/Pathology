@@ -1,0 +1,69 @@
+﻿@model Pathology.Models.TestMgmt
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="text-center">
+    <h1>Edit TestMgmt</h1>
+    <hr />
+</div>
+
+<form asp-action="Edit">
+    <table align="center" width="400">
+        <tr>
+            <td>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TestId" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="TestName" class="control-label">Test Name</label>
+                    <input asp-for="TestName" class="form-control" />
+                    <span asp-validation-for="TestName" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="TestPrice" class="control-label">Test Price</label>
+                    <input asp-for="TestPrice" class="form-control" />
+                    <span asp-validation-for="TestPrice" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="TestCategoryID" class="control-label">Test Category</label>
+                    <select asp-for="TestCategoryID" class="form-control" asp-items="ViewBag.TestCategoryID"></select>
+                    <span asp-validation-for="TestCategoryID" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label asp-for="PackageID" class="control-label">Package</label>
+                    <select asp-for="PackageID" class="form-control" asp-items="ViewBag.PackageID"></select>
+                    <span asp-validation-for="PackageID" class="text-danger"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+

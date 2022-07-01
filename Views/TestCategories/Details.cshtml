@@ -11,13 +11,13 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TestCategoryName)
+            Test Category Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TestCategoryName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TestCategoryDescription)
+            Test Category Description
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TestCategoryDescription)
@@ -25,6 +25,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.TestCategoryID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.TestCategoryID" class="btn btn-primary">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

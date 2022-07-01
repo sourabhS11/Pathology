@@ -15,13 +15,13 @@
         <thead>
             <tr style="background-color:aquamarine">
                 <th>
-                    @Html.DisplayNameFor(model => model.fName)
+                    First Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.lName)
+                    Last Name
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.joinDate)
+                    Date Of Joining
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
@@ -56,7 +56,7 @@
                 <td>
                     <form method="post" asp-action="DeleteUser" asp-route-id="@item.Id">
 
-                        <a class="btn btn-success" asp-action="EditUser" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-action="EditUser" asp-route-id="@item.Id">Edit</a>
 
                         <span id="confirmDeleteSpan_@item.Id" style="display:none">
                             <span>delete?</span>
