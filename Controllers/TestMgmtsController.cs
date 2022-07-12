@@ -25,7 +25,7 @@ namespace Pathology.Controllers
             return View(await appDBcontext.ToListAsync());
         }
 
-        // GET: TestMgmts/Details/5
+        // GET: TestMgmts/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,8 +54,6 @@ namespace Pathology.Controllers
         }
 
         // POST: TestMgmts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TestId,TestName,TestPrice,TestCategoryID,PackageID")] TestMgmt testMgmt)
@@ -71,7 +69,7 @@ namespace Pathology.Controllers
             return View(testMgmt);
         }
 
-        // GET: TestMgmts/Edit/5
+        // GET: TestMgmts/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,9 +87,7 @@ namespace Pathology.Controllers
             return View(testMgmt);
         }
 
-        // POST: TestMgmts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: TestMgmts/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TestId,TestName,TestPrice,TestCategoryID,PackageID")] TestMgmt testMgmt)
@@ -126,7 +122,7 @@ namespace Pathology.Controllers
             return View(testMgmt);
         }
 
-        // GET: TestMgmts/Delete/5
+        // GET: TestMgmts/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -146,7 +142,7 @@ namespace Pathology.Controllers
             return View(testMgmt);
         }
 
-        // POST: TestMgmts/Delete/5
+        // POST: TestMgmts/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -1,0 +1,99 @@
+﻿@model Pathology.Models.RegisterPatient
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="text-center">
+    <h1 class="justify-content-center">RegisterPatient</h1>
+</div>
+<hr />
+<form asp-action="Create">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 justify-content-start">
+                <div class="form-group">
+                </div>
+            </div>
+
+            <div class="col-md-4 justify-content-center">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="PatientID" class="control-label"></label>
+                    <input asp-for="PatientID" class="form-control" readonly value=@Context.Request.RouteValues["id"] />
+                </div>
+                <div class="form-group">
+                    <label asp-for="TestId" class="control-label"></label>
+                    <select id="TestList" asp-for="TestId" class="form-control" asp-items="ViewBag.TestId">
+                        <option selected disabled value="0">Choose</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PackageID" class="control-label"></label>
+                    <select id="PackageList" asp-for="PackageID" class="form-control" asp-items="ViewBag.PackageID">
+                        <option selected disabled value="0">Choose</option>
+                    </select>
+                </div>
+
+                <input id="DisplayPrice1" hidden />
+                <input id="DisplayPrice2" hidden />
+
+                <div class="form-group">
+                    <label asp-for="TotalAmount" class="control-label">Total Amount(click below to calculate)</label>
+                    <input asp-for="TotalAmount" class="form-control" id="ShowPrice" readonly />
+                    <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Id" class="form-control" readonly hidden value=@ViewBag.Id />
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+
+            <div class="col-md-3 justify-content-end">
+                <div class="form-group">
+                    <label asp-for="RegDateTime" class="control-label">Date Time</label>
+                    <input type="datetime" asp-for="RegDateTime" class="form-control" readonly value=@DateTime.Now />
+                    <span asp-validation-for="RegDateTime" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts
+            {
+    <script>
+        $("#TestList").change(function () {
+            var v = $(this).val();
+            $.getJSON("/RegisterPatients/GetPriceTest?testid=" + v, function (data) {
+                console.log(data);
+                $("#DisplayPrice1").val(data);
+            });
+        });
+    </script>
+
+    <script>
+        $("#PackageList").change(function () {
+            var v = $(this).val();
+            $.getJSON("/RegisterPatients/GetPricePackage?packageid=" + v, function (data) {
+                console.log(data);
+                $("#DisplayPrice2").val(data);
+            });
+        });
+    </script>
+
+    <script>
+        $("#ShowPrice").focus(function () {
+            var a = parseInt($("#DisplayPrice1").val());
+            var b = parseInt($("#DisplayPrice2").val());
+            var sum = a + b;
+            $("#ShowPrice").val(sum);
+        });
+    </script>
+}
+

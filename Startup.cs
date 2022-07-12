@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Pathology.ViewModels;
+using Pathology.Services;
 
 namespace Pathology
 {
@@ -45,7 +46,7 @@ namespace Pathology
             services.AddControllersWithViews();
 
             // services.AddDbContextPool<AppDBcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddScoped<IUserService, UserService>();
         }
         //
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

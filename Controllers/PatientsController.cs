@@ -24,7 +24,7 @@ namespace Pathology.Controllers
             return View(await _context.Patient.ToListAsync());
         }
 
-        // GET: Patients/Details/5
+        // GET: Patients/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,8 +49,6 @@ namespace Pathology.Controllers
         }
 
         // POST: Patients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PatientID,PatientName,PatientEmail,PatientAadharID,PatientHealthIssues,DateOfBirth")] Patient patient)
@@ -64,7 +62,7 @@ namespace Pathology.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Edit/5
+        // GET: Patients/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,9 +78,7 @@ namespace Pathology.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Patients/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PatientID,PatientName,PatientEmail,PatientAadharID,PatientHealthIssues,DateOfBirth")] Patient patient)
@@ -115,7 +111,7 @@ namespace Pathology.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Delete/5
+        // GET: Patients/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +129,7 @@ namespace Pathology.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Delete/5
+        // POST: Patients/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -148,5 +144,23 @@ namespace Pathology.Controllers
         {
             return _context.Patient.Any(e => e.PatientID == id);
         }
+
+
+        public async Task<IActionResult> PatientSearch(string SearchTerm)
+        {
+
+            if (!string.IsNullOrEmpty(SearchTerm))
+            {
+                var patients = from p in _context.Patient
+                               select p;
+
+                patients = patients.Where(s => s.PatientName.Contains(SearchTerm));
+
+                return View(await patients.ToListAsync());
+            }
+
+            return View();
+        }
+
     }
 }

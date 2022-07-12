@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Add New</a>
+    <a asp-controller="Patients" asp-action="Create">Add New Patient</a><br />
 </p>
 <table class="table">
     <thead style="background-color:aqua">
@@ -27,7 +27,7 @@
             <th>
                 Date Of Birth
             </th>
-            <th>
+            <th width="320">
                 Action
             </th>
         </tr>
@@ -54,6 +54,7 @@
                 <a asp-action="Edit" asp-route-id="@item.PatientID" class="btn btn-primary">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.PatientID" class="btn btn-success">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.PatientID" class="btn btn-danger">Delete</a>
+                <a asp-controller="RegisterPatients" asp-action="Create" asp-route-id="@item.PatientID" class="btn btn-primary">Register</a>
             </td>
         </tr>
 }

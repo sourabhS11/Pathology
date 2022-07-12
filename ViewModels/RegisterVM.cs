@@ -9,9 +9,11 @@ namespace Pathology.ViewModels
     public class RegisterVM
     {
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string fName { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string lName { get; set; }
 
         [Required]
@@ -22,6 +24,7 @@ namespace Pathology.ViewModels
         public string addrs { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string qualification { get; set; }
 
         [Required]
@@ -34,8 +37,7 @@ namespace Pathology.ViewModels
         public string Cpwd { get; set; }
 
         [Required]
-        [MaxLength(12, ErrorMessage = "12 digits only")]
-        [MinLength(12, ErrorMessage = "12 digits only")]
+        [StringLength(12, ErrorMessage = "12 digits only")]
         public string adharId { get; set; }
 
         [Required]

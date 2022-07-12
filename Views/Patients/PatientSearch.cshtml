@@ -1,0 +1,89 @@
+﻿@model List<Pathology.Models.Patient>
+
+@{
+    ViewData["Title"] = "Search";
+}
+<div class="text-center">
+<h1>Search</h1>
+</div>
+<form asp-controller="Patients" asp-action="PatientSearch" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" name="SearchTerm" />
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+<br />
+<br />
+<br />
+@if (Model != null)
+{
+    @if (Model.Count == 0)
+    {
+        <table class="table" align="center">
+            <thead>
+                <tr>
+                    <td align="center">
+                        Patient Not Found
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <a class="btn btn-primary" asp-controller="Patients" asp-action="Create">Add New Patient</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        PatientName
+                    </th>
+                    <th>
+                        DateOfBirth
+                    </th>
+                    <th>
+                        PatientEmail
+                    </th>
+                    <th>
+                        PatientAadharID
+                    </th>
+                    <th>
+                        Register
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientEmail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientAadharID)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-route-id="@item.PatientID" asp-controller="RegisterPatients" asp-action="Create">Register</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+

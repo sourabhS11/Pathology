@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pathology.Models;
 
 namespace Pathology.Migrations
 {
     [DbContext(typeof(AppDBcontext))]
-    partial class AppDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20220706095642_RegisterPatient")]
+    partial class RegisterPatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,9 +183,6 @@ namespace Pathology.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsReportGenerated")
                         .HasColumnType("bit");
 
@@ -199,21 +198,25 @@ namespace Pathology.Migrations
                     b.Property<byte[]>("RoportPDF")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("TestId")
+                    b.Property<int>("TestId")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalAmount")
                         .HasColumnType("int");
 
-                    b.HasKey("RegisterID");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("Id");
+                    b.HasKey("RegisterID");
 
                     b.HasIndex("PackageID");
 
                     b.HasIndex("PatientID");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("TestId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RegisterPatient");
                 });
@@ -432,12 +435,6 @@ namespace Pathology.Migrations
 
             modelBuilder.Entity("Pathology.Models.RegisterPatient", b =>
                 {
-                    b.HasOne("Pathology.ViewModels.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Pathology.Models.Package", "Package")
                         .WithMany()
                         .HasForeignKey("PackageID")
@@ -451,8 +448,16 @@ namespace Pathology.Migrations
                         .IsRequired();
 
                     b.HasOne("Pathology.Models.TestMgmt", "TestMgmt")
+                        .WithOne()
+                        .HasForeignKey("Pathology.Models.RegisterPatient", "TestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Pathology.ViewModels.User", "User")
                         .WithMany()
-                        .HasForeignKey("TestId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Package");
 

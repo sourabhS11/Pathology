@@ -24,7 +24,7 @@ namespace Pathology.Controllers
             return View(await _context.TestCategory.ToListAsync());
         }
 
-        // GET: TestCategories/Details/5
+        // GET: TestCategories/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,8 +49,6 @@ namespace Pathology.Controllers
         }
 
         // POST: TestCategories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TestCategoryID,TestCategoryName,TestCategoryDescription")] TestCategory testCategory)
@@ -64,7 +62,7 @@ namespace Pathology.Controllers
             return View(testCategory);
         }
 
-        // GET: TestCategories/Edit/5
+        // GET: TestCategories/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,9 +78,7 @@ namespace Pathology.Controllers
             return View(testCategory);
         }
 
-        // POST: TestCategories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: TestCategories/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TestCategoryID,TestCategoryName,TestCategoryDescription")] TestCategory testCategory)
@@ -115,7 +111,7 @@ namespace Pathology.Controllers
             return View(testCategory);
         }
 
-        // GET: TestCategories/Delete/5
+        // GET: TestCategories/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +129,7 @@ namespace Pathology.Controllers
             return View(testCategory);
         }
 
-        // POST: TestCategories/Delete/5
+        // POST: TestCategories/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

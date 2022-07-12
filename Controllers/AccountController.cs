@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Pathology.Services;
 using Pathology.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Pathology.Extensions;
 
 namespace Pathology.Controllers
 {
@@ -12,12 +14,15 @@ namespace Pathology.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
+        private readonly IUserService _userService;
 
         public AccountController(UserManager<User> userManager,
-                                RoleManager<Role> roleManager)
+                                RoleManager<Role> roleManager,
+                                IUserService userService)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this._userService = userService;
         }
 
         public IActionResult DashAD()
@@ -38,16 +43,19 @@ namespace Pathology.Controllers
         public async Task<IActionResult> UserMgmtAsync()
         {
             var users = userManager.Users;
-
+            var userID = _userService.GetUserID();
+            var uID = new Guid(userID);
             List<UserData> UserDataList = new List<UserData>();
 
             foreach (var u in users)
             {
                 var uRole = await userManager.GetRolesAsync(u);
-                UserDataList.Add(new UserData(u.Id, u.fName, u.lName, u.Email, u.joinDate, uRole));
+                UserDataList.Add(new UserData(u.Id, u.fName, u.lName, u.Email, Convert.ToDateTime(DateTimeFormat.GetDate(u.joinDate)), uRole));
             }
 
-            return View(UserDataList);
+            var UserList = UserDataList.Where(U => U.Id != uID);
+
+            return View(UserList);
         }
 
         [HttpGet]

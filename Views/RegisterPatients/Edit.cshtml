@@ -1,0 +1,66 @@
+﻿@model Pathology.Models.RegisterPatient
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RegisterPatient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RegisterID" />
+            <div class="form-group">
+                <label asp-for="PatientID" class="control-label"></label>
+                <select asp-for="PatientID" class="form-control" asp-items="ViewBag.PatientID"></select>
+                <span asp-validation-for="PatientID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TestId" class="control-label"></label>
+                <select asp-for="TestId" class="form-control" asp-items="ViewBag.TestId"></select>
+                <span asp-validation-for="TestId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PackageID" class="control-label"></label>
+                <select asp-for="PackageID" class="form-control" asp-items="ViewBag.PackageID"></select>
+                <span asp-validation-for="PackageID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegDateTime" class="control-label"></label>
+                <input asp-for="RegDateTime" class="form-control" />
+                <span asp-validation-for="RegDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <select asp-for="Id" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsReportGenerated" /> @Html.DisplayNameFor(model => model.IsReportGenerated)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoportPDF" class="control-label"></label>
+                <input asp-for="RoportPDF" class="form-control" />
+                <span asp-validation-for="RoportPDF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

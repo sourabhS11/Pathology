@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pathology.Models;
 
 namespace Pathology.Migrations
 {
     [DbContext(typeof(AppDBcontext))]
-    partial class AppDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20220707121805_RP_update_FK_UserId_to_Id")]
+    partial class RP_update_FK_UserId_to_Id
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,7 +201,7 @@ namespace Pathology.Migrations
                     b.Property<byte[]>("RoportPDF")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("TestId")
+                    b.Property<int>("TestId")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalAmount")
@@ -213,7 +215,8 @@ namespace Pathology.Migrations
 
                     b.HasIndex("PatientID");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("TestId")
+                        .IsUnique();
 
                     b.ToTable("RegisterPatient");
                 });
@@ -451,8 +454,10 @@ namespace Pathology.Migrations
                         .IsRequired();
 
                     b.HasOne("Pathology.Models.TestMgmt", "TestMgmt")
-                        .WithMany()
-                        .HasForeignKey("TestId");
+                        .WithOne()
+                        .HasForeignKey("Pathology.Models.RegisterPatient", "TestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Package");
 

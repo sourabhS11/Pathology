@@ -21,6 +21,7 @@ namespace Pathology.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
         }
 
         public DbSet<TestCategory> TestCategory { get; set; }
@@ -28,5 +29,7 @@ namespace Pathology.Models
         public DbSet<Patient> Patient { get; set; }
 
         public DbSet<TestMgmt> TestMgmt { get; set; }
+        
+        public DbSet<RegisterPatient> RegisterPatient { get; set; }
     }
 }
