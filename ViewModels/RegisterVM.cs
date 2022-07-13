@@ -8,39 +8,39 @@ namespace Pathology.ViewModels
 {
     public class RegisterVM
     {
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string fName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string lName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [EmailAddress]
         public string email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string addrs { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string qualification { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string role { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string pwd { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [Compare("pwd", ErrorMessage = "Passwords dont match")]
         public string Cpwd { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [StringLength(12, ErrorMessage = "12 digits only")]
         public string adharId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Date of joining")]
         [DataType(DataType.Date)]
         public DateTime joinDate { get; set; }

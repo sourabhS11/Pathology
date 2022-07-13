@@ -108,14 +108,16 @@ namespace Pathology.Controllers
             ViewData["PackageID"] = new SelectList(_context.Packages, "PackageID", "PackageName", registerPatient.PackageID);
             ViewData["PatientID"] = new SelectList(_context.Patient, "PatientID", "PatientID", registerPatient.PatientID);
             ViewData["TestId"] = new SelectList(_context.TestMgmt, "TestId", "TestName", registerPatient.TestId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", registerPatient.Id);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", registerPatient.Id);
+            var Id = _userService.GetUserID();
+            ViewData["Id"] = Id;
             return View(registerPatient);
         }
 
         // POST: RegisterPatients/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RegisterID,PatientID,TestId,PackageID,RegDateTime,TotalAmount,UserId,IsReportGenerated,RoportPDF")] RegisterPatient registerPatient)
+        public async Task<IActionResult> Edit([FromRoute] int id, [Bind("RegisterID,PatientID,TestId,PackageID,RegDateTime,TotalAmount,Id,IsReportGenerated,RoportPDF")] RegisterPatient registerPatient)
         {
             if (id != registerPatient.RegisterID)
             {
@@ -145,7 +147,9 @@ namespace Pathology.Controllers
             ViewData["PackageID"] = new SelectList(_context.Packages, "PackageID", "PackageDescription", registerPatient.PackageID);
             ViewData["PatientID"] = new SelectList(_context.Patient, "PatientID", "PatientAadharID", registerPatient.PatientID);
             ViewData["TestId"] = new SelectList(_context.TestMgmt, "TestId", "TestName", registerPatient.TestId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", registerPatient.Id);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", registerPatient.Id);
+            var Id = _userService.GetUserID();
+            ViewData["Id"] = Id;
             return View(registerPatient);
         }
 

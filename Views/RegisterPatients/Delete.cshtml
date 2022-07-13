@@ -4,60 +4,53 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Delete Registered Patient</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>RegisterPatient</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient)
+        <dt class="col-sm-2">
+            Patient ID
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Patient.PatientAadharID)
+            @Html.DisplayFor(model => model.Patient.PatientID)
         </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TestMgmt)
+        <dt class="col-sm-2">
+            Test Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TestMgmt.TestName)
         </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Package)
+        <dt class="col-sm-2">
+            Package Name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Package.PackageDescription)
+            @Html.DisplayFor(model => model.Package.PackageName)
         </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RegDateTime)
+            Register DateTime
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.RegDateTime)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalAmount)
+            Total Amount
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TotalAmount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
+            Registered By
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
+            @Html.DisplayFor(model => model.User.Email)
         </dd class>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsReportGenerated)
+            Is Report Generated
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IsReportGenerated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RoportPDF)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RoportPDF)
         </dd>
     </dl>
     

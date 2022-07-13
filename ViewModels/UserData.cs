@@ -24,10 +24,12 @@ namespace Pathology.ViewModels
             this.Roles = Roles;
 
         }
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string fName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string lName { get; set; }
 
         public string addrs { get; set; }
@@ -36,8 +38,10 @@ namespace Pathology.ViewModels
 
         public string adharId { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime joinDate { get; set; }
 
+        [Required(ErrorMessage = "Required")]
         public IList<string> Roles { get; set; }
     }
 }

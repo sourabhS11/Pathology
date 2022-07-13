@@ -12,10 +12,10 @@ namespace Pathology.Models
         [Key]
         public int TestId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string TestName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public int TestPrice { get; set; }
 
         //Foreign key for TestCategory

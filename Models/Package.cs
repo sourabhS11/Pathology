@@ -11,13 +11,13 @@ namespace Pathology.Models
         [Key]
         public int PackageID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string PackageName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string PackageDescription { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public int PackagrPrice { get; set; }
     }
 }

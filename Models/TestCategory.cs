@@ -11,10 +11,10 @@ namespace Pathology.Models
         [Key]
         public int TestCategoryID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string TestCategoryName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string TestCategoryDescription { get; set; }
 
     }

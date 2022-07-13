@@ -7,20 +7,32 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            <a asp-controller="Patients" asp-action="PatientSearch" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Register</a>
+            <div class="dropdown show">
+                <a  class="btn btn-success dropdown-toggle btn-lg btn-block active" href="#" role="button"
+                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"aria-pressed="true">
+                    Register
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" asp-controller="Patients" asp-action="PatientSearch">New Registration</a>
+                    <a class="dropdown-item" asp-controller="RegisterPatients" asp-action="Index">Registered Patients</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
+                Appointment
+            </a>
         </div>
         <div class="col-sm">
             <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Appointment</a>
+                Payment
+            </a>
         </div>
         <div class="col-sm">
             <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Payment</a>
-        </div>
-        <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Receipt</a>
+                Receipt
+            </a>
         </div>
     </div>
 </div>

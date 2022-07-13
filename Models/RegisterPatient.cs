@@ -13,7 +13,7 @@ namespace Pathology.Models
         [Key]
         public int RegisterID { get; set; }
 
-        public int PatientID { get; set; }
+        public int? PatientID { get; set; }
         [ForeignKey("PatientID")]
         public Patient Patient { get; set; }
 
@@ -21,7 +21,7 @@ namespace Pathology.Models
         [ForeignKey("TestId")]
         public TestMgmt TestMgmt { get; set; }
 
-        public int PackageID { get; set; }
+        public int? PackageID { get; set; }
         [ForeignKey("PackageID")]
         public Package Package { get; set; }
 
@@ -29,7 +29,7 @@ namespace Pathology.Models
 
         public int TotalAmount { get; set; }
 
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         [ForeignKey("Id")]
         public User User { get; set; }
 

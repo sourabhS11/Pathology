@@ -8,10 +8,11 @@ namespace Pathology.ViewModels
 {
     public class LoginVM
     {
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [EmailAddress]
         public string email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string pwd { get; set; }
 
         [Display(Name = "Remember Me")]

@@ -11,19 +11,24 @@ namespace Pathology.Models
         [Key]
         public int PatientID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
         public string PatientName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [EmailAddress]
         public string PatientEmail { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [StringLength(12, ErrorMessage = "12 digits only")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "only Numbers allowed")]
         public string PatientAadharID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string PatientHealthIssues { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
     }

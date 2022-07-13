@@ -27,7 +27,7 @@
                     <input asp-for="lName" class="form-control">
                     <span asp-validation-for="lName" class="text-danger"></span>
                 </td>
-            </tr>           
+            </tr>
             <tr>
                 <td>
                     <label asp-for="Roles" class="col-form-label"></label>
@@ -58,4 +58,7 @@
             </tr>
         </table>
     </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 </form>

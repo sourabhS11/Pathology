@@ -4,74 +4,85 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Registered Patient Index</h1>
 
 <p>
     <a asp-controller="Patients" asp-action="PatientSearch">Add New</a>
 </p>
 <table class="table">
-    <thead>
+    <thead style="background-color:aqua">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                Patient Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TestMgmt)
+                Test Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Package)
+                Package Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RegDateTime)
+                Register DateTime
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
+                Total Amount
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                Registered By
             </th>
             <th>
-                isRG
+                Report PDF
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoportPDF)
+            <th width="240">
+                Action
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient.PatientName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Package.PackageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.fName) @item.User.lName
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsReportGenerated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoportPDF)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RegisterID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RegisterID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RegisterID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.PatientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Package.PackageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.fName) @item.User.lName
+                </td>
+                <td>
+                    @if (item.IsReportGenerated)
+                    {
+                        <a asp-action="Download" class="btn btn-success">Download</a>
+                    }
+                    else
+                    {
+                        @if (!User.IsInRole("Desk Staff"))
+                        {
+                            <a asp-action="Upload" class="btn btn-primary">Upload</a>
+                        }
+                        else
+                        {
+                            <a>Not Uploaded</a>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RegisterID" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.RegisterID" class="btn btn-success">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

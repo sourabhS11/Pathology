@@ -3,55 +3,37 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>RegisterPatient</h4>
+<div class="text-center">
+    <h1>Edit Registered Patient</h1>
+</div>
 <hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="RegisterID" />
-            <div class="form-group">
-                <label asp-for="PatientID" class="control-label"></label>
-                <select asp-for="PatientID" class="form-control" asp-items="ViewBag.PatientID"></select>
-                <span asp-validation-for="PatientID" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="Id" value=@ViewBag.Id />
+            <input type="hidden" asp-for="PatientID" asp-items="ViewBag.PatientID" />
+            <input type="hidden" asp-for="RegDateTime" class="form-control" />
+            <input type="hidden" asp-for="IsReportGenerated" />
+            <input type="hidden" asp-for="RoportPDF" class="form-control" />
+
             <div class="form-group">
                 <label asp-for="TestId" class="control-label"></label>
-                <select asp-for="TestId" class="form-control" asp-items="ViewBag.TestId"></select>
+                <select id="TestList" asp-for="TestId" class="form-control" asp-items="ViewBag.TestId">Test Name</select>
                 <span asp-validation-for="TestId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PackageID" class="control-label"></label>
-                <select asp-for="PackageID" class="form-control" asp-items="ViewBag.PackageID"></select>
+                <select id="PackageList" asp-for="PackageID" class="form-control" asp-items="ViewBag.PackageID">Package Name</select>
                 <span asp-validation-for="PackageID" class="text-danger"></span>
             </div>
+            <input id="DisplayPrice1" hidden />
+            <input id="DisplayPrice2" hidden />
             <div class="form-group">
-                <label asp-for="RegDateTime" class="control-label"></label>
-                <input asp-for="RegDateTime" class="form-control" />
-                <span asp-validation-for="RegDateTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
+                <label asp-for="TotalAmount" class="control-label">Total Amount</label>
+                <input asp-for="TotalAmount" class="form-control" id="ShowPrice" readonly />
                 <span asp-validation-for="TotalAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <select asp-for="Id" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsReportGenerated" /> @Html.DisplayNameFor(model => model.IsReportGenerated)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoportPDF" class="control-label"></label>
-                <input asp-for="RoportPDF" class="form-control" />
-                <span asp-validation-for="RoportPDF" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -60,7 +42,48 @@
     </div>
 </div>
 
-<div>
+<div class="text-center">
     <a asp-action="Index">Back to List</a>
 </div>
+@section Scripts
+            {
+    <script>
+        $("#TestList").change(function () {
+            var v = $(this).val();
+            $.getJSON("/RegisterPatients/GetPriceTest?testid=" + v, function (data) {
+                console.log(data);
+                $("#DisplayPrice1").val(data);
+            });
+        });
+    </script>
+
+    <script>
+        $("#PackageList").change(function () {
+            var v = $(this).val();
+            $.getJSON("/RegisterPatients/GetPricePackage?packageid=" + v, function (data) {
+                console.log(data);
+                $("#DisplayPrice2").val(data);
+            });
+        });
+    </script>
+
+    <script>
+        $("#TestList").focusout(function () {
+            var a = parseInt($("#DisplayPrice1").val());
+            var b = parseInt($("#DisplayPrice2").val());
+            var sum = a + b;
+            $("#ShowPrice").val(sum);
+        });
+    </script>
+
+    <script>
+        $("#PackageList").focusout(function () {
+            var a = parseInt($("#DisplayPrice1").val());
+            var b = parseInt($("#DisplayPrice2").val());
+            var sum = a + b;
+            $("#ShowPrice").val(sum);
+        });
+    </script>
+
+}
 

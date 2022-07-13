@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 <div class="text-center">
-    <h1 class="justify-content-center">RegisterPatient</h1>
+    <h1 class="justify-content-center">Register Patient</h1>
 </div>
 <hr />
 <form asp-action="Create">
@@ -38,7 +38,7 @@
                 <input id="DisplayPrice2" hidden />
 
                 <div class="form-group">
-                    <label asp-for="TotalAmount" class="control-label">Total Amount(click below to calculate)</label>
+                    <label asp-for="TotalAmount" class="control-label">Total Amount</label>
                     <input asp-for="TotalAmount" class="form-control" id="ShowPrice" readonly />
                     <span asp-validation-for="TotalAmount" class="text-danger"></span>
                 </div>
@@ -88,7 +88,16 @@
     </script>
 
     <script>
-        $("#ShowPrice").focus(function () {
+        $("#TestList").focusout(function () {
+            var a = parseInt($("#DisplayPrice1").val());
+            var b = parseInt($("#DisplayPrice2").val());
+            var sum = a + b;
+            $("#ShowPrice").val(sum);
+        });
+    </script>
+
+    <script>
+        $("#PackageList").focusout(function () {
             var a = parseInt($("#DisplayPrice1").val());
             var b = parseInt($("#DisplayPrice2").val());
             var sum = a + b;

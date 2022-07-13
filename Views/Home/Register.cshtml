@@ -100,7 +100,7 @@
                     </td>
                     <td>
                         <select asp-for="role" class="form-control">
-                            <option>Choose</option>
+                            <option selected disabled>Choose</option>
                             <option value="Associated Doctor">Associated Doctor</option>
                             <option value="Lab Assistant">Lab Assistant</option>
                             <option value="Desk Staff">Desk Staff</option>
@@ -127,7 +127,6 @@
         @section Scripts {
             @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
         }
-
     </form>
 </div>
 
