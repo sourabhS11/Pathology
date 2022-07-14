@@ -1,4 +1,5 @@
-﻿using Pathology.ViewModels;
+﻿using Microsoft.AspNetCore.Http;
+using Pathology.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -36,5 +37,6 @@ namespace Pathology.Models
         public bool IsReportGenerated { get; set; }
 
         public byte[] RoportPDF { get; set; }
+
     }
 }

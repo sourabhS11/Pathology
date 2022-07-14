@@ -56,21 +56,22 @@ namespace Pathology.Controllers
             if (ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(model.email, model.pwd, model.rememberMe, false);
-                
+                var user = await UserManager.FindByEmailAsync(model.email);
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole("Associated Doctor"))
+                    if (await UserManager.IsInRoleAsync(user, "Associated Doctor"))
                     {
                         return RedirectToAction("DashAD", "Account");
                     }
-                    if (User.IsInRole("Lab Assistant"))
+                    else if (await UserManager.IsInRoleAsync(user, "Lab Assistant"))
                     {
                         return RedirectToAction("DashLA", "Account");
                     }
-                    if (User.IsInRole("Desk Staff"))
+                    else if (await UserManager.IsInRoleAsync(user, "Desk Staff"))
                     {
                         return RedirectToAction("DashDS", "Account");
                     }
+
                 }
                     
                 ModelState.AddModelError("", "Invalid Login Attempt");               

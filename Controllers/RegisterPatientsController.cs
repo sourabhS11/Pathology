@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pathology.Models;
 using Pathology.Services;
 using Pathology.ViewModels;
@@ -17,14 +20,17 @@ namespace Pathology.Controllers
         private readonly AppDBcontext _context;
         private readonly UserManager<User> userManager;
         private readonly IUserService _userService;
+        private readonly ILogger<RegisterPatientsController> logger;
 
         public RegisterPatientsController(AppDBcontext context,
                                             UserManager<User> userManager,
-                                            IUserService userService)
+                                            IUserService userService,
+                                            ILogger<RegisterPatientsController> logger)
         {
             _context = context;
             this.userManager = userManager;
             this._userService = userService;
+            this.logger = logger;
         }
 
         // GET: RegisterPatients
@@ -83,7 +89,7 @@ namespace Pathology.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PackageID"] = new SelectList(_context.Packages, "PackageID", "PackageName", registerPatient.PackageID);
-            ViewData["TestId"] = new SelectList(_context.TestMgmt, "TestId", "TestName", registerPatient.TestId);      
+            ViewData["TestId"] = new SelectList(_context.TestMgmt, "TestId", "TestName", registerPatient.TestId);
 
             var users = userManager.Users;
             var Id = _userService.GetUserID();
@@ -203,6 +209,45 @@ namespace Pathology.Controllers
             var testPrice = _context.TestMgmt.Where(c => c.TestId == testid)
                                        .Select(c => c.TestPrice);
             return Json(testPrice);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadPdf(int? id, IFormFile file)
+        {            
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var regPatient = await _context.RegisterPatient.FindAsync(id);
+            if (regPatient == null)
+            {
+                return NotFound();
+            }
+
+            if (file != null)
+            {
+                if (file.Length > 0 && file.Length < 300000)
+                {
+                    using (var target = new MemoryStream())
+                    {
+                        file.CopyTo(target);
+                        regPatient.RoportPDF = target.ToArray();
+                    }
+                    regPatient.IsReportGenerated = true;
+                    _context.RegisterPatient.Update(regPatient);
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction("Index");
+            }
+            return NotFound();
+        }
+
+        public IActionResult Index1(int Id)
+        {
+            ViewData["Id"] = Id;
+            return View(); 
         }
     }
 }

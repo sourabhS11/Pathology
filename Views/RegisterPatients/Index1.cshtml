@@ -1,0 +1,25 @@
+﻿@model Pathology.ViewModels.UploadFile;
+
+
+<form method="post" enctype="multipart/form-data" asp-action="UploadPdf">
+    <div>
+        <input type="hidden" asp-for="Id" value=@ViewBag.Id />
+    </div>
+    <div class="custom-file">
+        <input asp-for="File" class="form-control custom-file-input">
+        <label class="custom-file-label">Choose File...</label>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+
+</form>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+}

@@ -31,5 +31,6 @@ namespace Pathology.Models
         public DbSet<TestMgmt> TestMgmt { get; set; }
         
         public DbSet<RegisterPatient> RegisterPatient { get; set; }
+        
     }
 }
