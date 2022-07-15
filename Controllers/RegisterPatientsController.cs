@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -218,7 +220,7 @@ namespace Pathology.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> UploadPdf(int? id, IFormFile file)
-        {            
+        {
             if (id == null)
             {
                 return NotFound();
@@ -242,6 +244,8 @@ namespace Pathology.Controllers
                     regPatient.IsReportGenerated = true;
                     _context.RegisterPatient.Update(regPatient);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction("SendEmail", new { RegistrationId = id });
                 }
 
                 return RedirectToAction("Index");
@@ -298,6 +302,37 @@ namespace Pathology.Controllers
 
                 return RedirectToAction("Index");
             }
+        }
+        public bool SendEmail(int RegistrationId)
+        {
+            var registerPatient = _context.RegisterPatient.FirstOrDefault(y => y.RegisterID == RegistrationId);
+
+            var patient = _context.Patient.FirstOrDefault(x => x.PatientID == registerPatient.PatientID);
+
+            var email = patient.PatientEmail;
+
+            MailMessage mm = new MailMessage();
+
+            mm.Subject = "Report Generated";
+            mm.Body = "Your report has been generatrd";
+            mm.From = new MailAddress("icarediagnostics88@gmail.com");
+            mm.To.Add(new MailAddress(email));
+            mm.IsBodyHtml = false;
+            using (SmtpClient smtp = new SmtpClient())
+            {
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential("icarediagnostics88@gmail.com", "Wecare@1234");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                //smtp.Send(mm);
+                smtp.SendMailAsync(mm);
+                ViewBag.Message = "Email sent.";
+
+            }
+
+            return true;
         }
     }
 }
