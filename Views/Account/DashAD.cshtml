@@ -19,15 +19,17 @@
                     <a class="dropdown-item" asp-controller="TestMgmts" asp-action="Index">Test Management</a>
                     <a class="dropdown-item" asp-controller="Patients" asp-action="Index">Patient Details</a>
                 </div>
-            </div>      
+            </div>
+        </div>
+        <div class="col-sm">
+            <a href="@Url.Action("Index", "RegisterPatients")" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
+                View Registration
+            </a>
         </div>
         <div class="col-sm">
             <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Reports</a>
-        </div>
-        <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            View Report Statistics</a>
+                View Report Statistics
+            </a>
         </div>
     </div>
 </div>

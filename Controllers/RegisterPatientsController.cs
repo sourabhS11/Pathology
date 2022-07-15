@@ -211,6 +211,11 @@ namespace Pathology.Controllers
             return Json(testPrice);
         }
 
+        public IActionResult FileUpload(int Id)
+        {
+            ViewData["Id"] = Id;
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> UploadPdf(int? id, IFormFile file)
         {            
@@ -244,10 +249,55 @@ namespace Pathology.Controllers
             return NotFound();
         }
 
-        public IActionResult Index1(int Id)
+        public async Task<IActionResult> DownloadPdf(int? Id)
+        {
+            var regPatient = await _context.RegisterPatient.FirstOrDefaultAsync(x => x.RegisterID == Id);
+
+            if (regPatient == null)
+            {
+                return NotFound();
+            }
+            if (regPatient.RoportPDF == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                byte[] myFile = regPatient.RoportPDF;
+                string filetype = "Application/pdf";
+
+                return new FileContentResult(myFile, filetype);
+            }
+        }
+
+        public IActionResult FileDelete(int Id)
         {
             ViewData["Id"] = Id;
-            return View(); 
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePdf(int? Id)
+        {
+            var regPatient = await _context.RegisterPatient.FirstOrDefaultAsync(x => x.RegisterID == Id);
+
+            if (regPatient == null)
+            {
+                return NotFound();
+            }
+            if (regPatient.RoportPDF == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                regPatient.RoportPDF = null;
+                regPatient.IsReportGenerated = false;
+                _context.RegisterPatient.Update(regPatient);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
         }
     }
 }

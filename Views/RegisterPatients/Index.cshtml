@@ -10,7 +10,7 @@
     <a asp-controller="Patients" asp-action="PatientSearch">Add New</a>
 </p>
 <table class="table">
-    <thead style="background-color:aqua">
+    <thead style="background-color:aqua" align="center">
         <tr>
             <th>
                 Patient Name
@@ -30,7 +30,7 @@
             <th>
                 Registered By
             </th>
-            <th>
+            <th width="200">
                 Report PDF
             </th>
             <th width="240">
@@ -60,18 +60,22 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.User.fName) @item.User.lName
                 </td>
-                <td>
+                <td align="center">
                     @if (item.IsReportGenerated)
                     {
-                        <a asp-action="Download" class="btn btn-success">Download</a>
+                        <a asp-action="DownloadPdf" asp-route-id="@item.RegisterID" class="btn btn-success">Download</a>
+                       
+                        @if (!User.IsInRole("Desk Staff"))
+                        {
+                            <a asp-action="FileDelete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
 
+                        }
                     }
                     else
                     {
                         @if (!User.IsInRole("Desk Staff"))
                         {
-                           
-                                    <a asp-action="Index1" asp-route-id="@item.RegisterID" class="btn btn-primary">Upload</a>
+                            <a asp-action="FileUpload" asp-route-id="@item.RegisterID" class="btn btn-primary">Upload</a>
 
                         }
                         else

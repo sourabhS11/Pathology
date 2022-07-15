@@ -4,16 +4,21 @@
     ViewData["Title"] = "Search";
 }
 <div class="text-center">
-<h1>Search Patient</h1>
+    <h1>Search Patient</h1>
 </div>
+<br />
+<br />
 <form asp-controller="Patients" asp-action="PatientSearch" method="get">
-    <div class="input-group">
-        <input type="text" class="form-control" name="SearchTerm" />
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">Search</button>
+    <div class="row justify-content-center">
+        <div class="input-group col-md-4">
+            <input type="text" class="form-control" name="SearchTerm" />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
         </div>
     </div>
 </form>
+<br />
 <br />
 <br />
 <br />
