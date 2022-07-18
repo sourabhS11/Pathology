@@ -64,11 +64,10 @@
                     @if (item.IsReportGenerated)
                     {
                         <a asp-action="DownloadPdf" asp-route-id="@item.RegisterID" class="btn btn-success">Download</a>
-                       
+
                         @if (!User.IsInRole("Desk Staff"))
                         {
                             <a asp-action="FileDelete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
-
                         }
                     }
                     else
@@ -76,7 +75,6 @@
                         @if (!User.IsInRole("Desk Staff"))
                         {
                             <a asp-action="FileUpload" asp-route-id="@item.RegisterID" class="btn btn-primary">Upload</a>
-
                         }
                         else
                         {

@@ -303,7 +303,7 @@ namespace Pathology.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public bool SendEmail(int RegistrationId)
+        public IActionResult SendEmail(int RegistrationId)
         {
             var registerPatient = _context.RegisterPatient.FirstOrDefault(y => y.RegisterID == RegistrationId);
 
@@ -322,17 +322,15 @@ namespace Pathology.Controllers
             {
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
-                NetworkCredential NetworkCred = new NetworkCredential("icarediagnostics88@gmail.com", "Wecare@1234");
-                smtp.UseDefaultCredentials = true;
+                NetworkCredential NetworkCred = new NetworkCredential("icarediagnostics88@gmail.com", "uqvxrnivqpgannoj");
+                //smtp.UseDefaultCredentials = true;
+                smtp.UseDefaultCredentials = false;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;
-                //smtp.Send(mm);
-                smtp.SendMailAsync(mm);
-                ViewBag.Message = "Email sent.";
-
+                smtp.Send(mm);
+                ViewBag.Message = "Email sent";
             }
-
-            return true;
+            return RedirectToAction("Index");
         }
     }
 }
