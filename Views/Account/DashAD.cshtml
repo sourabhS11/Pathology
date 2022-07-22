@@ -1,14 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "Associate Doctor";
+    ViewData["Title"] = "Doctor Dashboard";
 }
 <div class="text-center">
-    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <h1 class="text-secondary">@ViewData["Title"]</h1>
 </div>
-<div class="container">
-    <div class="row">
+<nav class="navbar navbar-dark bg-dark">
         <div class="col-sm">
             <div class="dropdown show">
-                <a class="btn btn-success dropdown-toggle btn-lg btn-block" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="btn btn-dark dropdown btn-lg btn-block" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Master Maintenance
                 </a>
 
@@ -22,15 +21,15 @@
             </div>
         </div>
         <div class="col-sm">
-            <a href="@Url.Action("Index", "RegisterPatients")" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
+            <a href="@Url.Action("Index", "RegisterPatients")" class="btn btn-dark btn-lg btn-block " role="button">
                 View Registration
             </a>
         </div>
         <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
+            <a href="#" class="btn btn-dark btn-lg btn-block " role="button">
                 View Report Statistics
             </a>
         </div>
-    </div>
-</div>
+</nav>
+
 

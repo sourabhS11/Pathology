@@ -23,8 +23,7 @@
                         <input asp-for="PatientName" readonly class="form-control" value="@ViewBag.PatientName" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="RegisterID" class="control-label"></label>
-                        <input asp-for="RegisterID" readonly class="form-control" value="@ViewBag.RegisterID" />
+                        <input asp-for="RegisterID" hidden readonly class="form-control" value="@ViewBag.RegisterID" />
                         <span asp-validation-for="RegisterID" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -81,7 +80,7 @@
                         <input id="Create" name="Create" type="submit" value="Create" class="btn btn-primary" />
                     </div>
                     <div class="d-flex justify-content-center">
-                        <input id="Receipt" name="Receipt" type="submit" form="form1" asp-controller="Payments" asp-action="GenerateReceiptPdf" class="btn btn-primary" />
+                        <input id="Receipt" name="Receipt" type="submit" value="Generate Receipt" form="form1" asp-controller="Payments" asp-action="GenerateReceiptPdf" class="btn btn-primary" />
                     </div>
                 </div>
 
@@ -151,7 +150,7 @@
     </script>
     <script>
         $(function () {
-            $("form1").validate();
+            $("#form1").validate();
         });
     </script>
     <script>
@@ -164,7 +163,7 @@
                     $("#Create").hide(500);
                     $("#Receipt").show(500);
                     $.post($(this).attr('action'), $(this).serialize(), function (response) {
-                        // do something here on success
+
                     }, 'json');
                     return false;
                 }

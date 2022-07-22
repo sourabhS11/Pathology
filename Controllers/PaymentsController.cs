@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iText.Html2pdf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using Pathology.Models;
 
 namespace Pathology.Controllers
 {
+    [Authorize]
     public class PaymentsController : Controller
     {
         private readonly AppDBcontext _context;
@@ -26,24 +28,6 @@ namespace Pathology.Controllers
         {
             var appDBcontext = _context.Payment;
             return View(await appDBcontext.ToListAsync());
-        }
-
-        // GET: Payments/Details
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var payment = await _context.Payment.FirstOrDefaultAsync(m => m.PaymentID == id);
-
-            if (payment == null)
-            {
-                return NotFound();
-            }
-
-            return View(payment);
         }
 
         // GET: Payments/Create
@@ -70,91 +54,6 @@ namespace Pathology.Controllers
                 return View(payment);
             }
             return View(payment);
-        }
-
-        // GET: Payments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var payment = await _context.Payment.FindAsync(id);
-            if (payment == null)
-            {
-                return NotFound();
-            }
-            ViewData["RegisterID"] = new SelectList(_context.Patient, "PatientID", "PatientAadharID", payment.RegisterID);
-            return View(payment);
-        }
-
-        // POST: Payments/Edit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentID,PaymentDate,RegisterID,ModeOfPayment,TransactionID,Amount,GST,TotalAmount,DiscountAllowed,NetAmount")] Payment payment)
-        {
-            if (id != payment.PaymentID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(payment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PaymentExists(payment.PaymentID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RegisterID"] = new SelectList(_context.Patient, "PatientID", "PatientAadharID", payment.RegisterID);
-            return View(payment);
-        }
-
-        // GET: Payments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var payment = await _context.Payment.FirstOrDefaultAsync(m => m.PaymentID == id);
-
-            if (payment == null)
-            {
-                return NotFound();
-            }
-
-            return View(payment);
-        }
-
-        // POST: Payments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var payment = await _context.Payment.FindAsync(id);
-            _context.Payment.Remove(payment);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool PaymentExists(int id)
-        {
-            return _context.Payment.Any(e => e.PaymentID == id);
         }
 
         public IActionResult GetAmount(int id)

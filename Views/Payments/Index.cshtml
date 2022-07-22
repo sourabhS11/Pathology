@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Payments Index</h1>
+<h1>Payments List</h1>
 
 <p>
     <a asp-controller="RegisterPatients" asp-action="RegPatientSearch">Add New</a>
@@ -14,9 +14,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.PaymentDate)
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.RegisterPatient)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModeOfPayment)
@@ -47,9 +44,6 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.PaymentDate)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.RegisterPatient.PatientAadharID)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ModeOfPayment)

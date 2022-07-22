@@ -1,38 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Desk Staff";
+    ViewData["Title"] = "Desk Staff Dashboard";
 }
 <div class="text-center">
-    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <h1 class="text-secondary">@ViewData["Title"]</h1>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <div class="dropdown show">
-                <a  class="btn btn-success dropdown-toggle btn-lg btn-block active" href="#" role="button"
-                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"aria-pressed="true">
-                    Register
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" asp-controller="Patients" asp-action="PatientSearch">New Registration</a>
-                    <a class="dropdown-item" asp-controller="RegisterPatients" asp-action="Index">Registered Patients</a>
-                </div>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="col-sm">
+        <div class="dropdown show">
+            <a class="btn btn-dark dropdown btn-lg btn-block " href="#" role="button"
+               id="dropdownMenuLink" data-toggle="dropdown">
+                Register
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" asp-controller="Patients" asp-action="PatientSearch">New Registration</a>
+                <a class="dropdown-item" asp-controller="RegisterPatients" asp-action="Index">Registered Patients</a>
             </div>
         </div>
-
-        <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-                Appointment
-            </a>
-        </div>
-        <div class="col-sm">
-            <a asp-controller="RegisterPatients" asp-action="RegPatientSearch" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-                Payment
-            </a>
-        </div>
-        <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-                Receipt
-            </a>
-        </div>
     </div>
-</div>
+    <div class="col-sm">
+        <a href="#" class="btn btn-dark btn-lg btn-block" role="button">
+            Appointment
+        </a>
+    </div>
+    <div class="col-sm">
+        <a asp-controller="RegisterPatients" asp-action="RegPatientSearch" class="btn btn-dark btn-lg btn-block" role="button">
+            Payment
+        </a>
+    </div>
+</nav>

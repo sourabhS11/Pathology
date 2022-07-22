@@ -5,19 +5,21 @@
     <title>Receipt</title>
 </head>
 <body>
-    <table align="center" cellpadding="10" cellspacing="30">
-        <tr>
-            <td>
-                <img src="../wwwroot/images/logo.png" height="75" width="75" alt="img" />
-            </td>
-            <td>
-                <h1>iCare Diagnostics</h1>
-            </td>
-        </tr>
-    </table>
+    <div>
+        <table align="center" cellpadding="10" cellspacing="30" width="50%" >
+            <tr>
+                <td>
+                    <img src="../wwwroot/images/logo.png" height="75" width="75" alt="img" />
+                </td>
+                <td>
+                    <h1>iCare Diagnostics</h1>
+                </td>
+            </tr>
+        </table>
+    </div>
     <hr />
     <div>
-        <table align="center" cellpadding="10" cellspacing="20">
+        <table align="left" cellpadding="10" cellspacing="20" width="25%">
             <tr>
                 <td>
                     Patient Name:
@@ -26,15 +28,6 @@
                     PATIENTNAME
                 </td>
             </tr>
-            <tr>
-                <td>
-                    Payment Date:
-                </td>
-                <td>
-                    PAYMENTDATE
-                </td>
-            </tr>
-
             <tr>
                 <td>
                     Test Name:
@@ -51,64 +44,56 @@
                     PACKAGENAME
                 </td>
             </tr>
+        </table>
+        <table align="right" cellpadding="10" width="25%">
             <tr>
                 <td>
-                    Amount:
+                    Payment Date:
                 </td>
                 <td>
-                    AMOUNT
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    gst:
-                </td>
-                <td>
-                    GST
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Total Amount:
-                </td>
-                <td>
-                    TOTALAMOUNT
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Discount Allowed:
-                </td>
-                <td>
-                    DISCOUNTALLOWED
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Net Amount:
-                </td>
-                <td>
-                    NETAMOUNT
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Mode Of Payment:
-                </td>
-                <td>
-                    ModeOfPayment
+                    PAYMENTDATE
                 </td>
             </tr>
         </table>
-        <hr />
     </div>
+    <br />
     <div>
-        <table align="right" cellpadding="10" cellspacing="20">
+        <table align="center" cellpadding="10" cellspacing="20" width="100%" border="1" style="border-collapse:collapse" >
             <tr>
-                <td>
+                <td>Amount</td>
+                <td>gst</td>
+                <td>Total Amount</td>
+                <td>Discount Allowed</td>
+                <td>Net Amount</td>
+            </tr>
+            <tr>
+                <td>AMOUNT</td>
+                <td>GST</td>
+                <td>TOTALAMOUNT</td>
+                <td>DISCOUNTALLOWED</td>
+                <td>NETAMOUNT</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <hr />
+    <div>
+        <table align="center" cellpadding="10" cellspacing="20" width="50%">
+            <tr>
+                <td align="left">
+                    Mode Of Payment:
+                </td>
+                <td align="left">
+                    ModeOfPayment
+                </td>
+                <td></td>
+                <td></td>
+                <td align="right">
                     Total Amount To Be Paid:
                 </td>
-                <td>
+                <td align="right">
                     NETAMOUNT
                 </td>
             </tr>

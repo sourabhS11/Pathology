@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pathology.Models;
@@ -80,11 +81,13 @@ namespace Pathology.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Register(RegisterVM model)
         {
             if (ModelState.IsValid)

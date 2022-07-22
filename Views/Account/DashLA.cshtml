@@ -1,18 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Lab Assistant";
+    ViewData["Title"] = "Lab Assistant Dashboard";
 }
 <div class="text-center">
-    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <h1 class="text-secondary">@ViewData["Title"]</h1>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Upload Reports</a>
-        </div>
-        <div class="col-sm">
-            <a href="#" class="btn btn-success btn-lg btn-block active" role="button" aria-pressed="true">
-            Patient Details</a>
-        </div>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="col-sm">
+        <a asp-controller="RegisterPatients" asp-action="Index" class="btn btn-dark btn-lg btn-block " role="button" >
+            Registration Details
+        </a>
     </div>
-</div>
+    <div class="col-sm">
+        <a asp-controller="Patients" asp-action="Index" class="btn btn-dark btn-lg btn-block " role="button" >
+            Patient Details
+        </a>
+    </div>
+</nav>

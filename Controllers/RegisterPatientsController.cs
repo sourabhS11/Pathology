@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ using Pathology.ViewModels;
 
 namespace Pathology.Controllers
 {
+    [Authorize]
     public class RegisterPatientsController : Controller
     {
         private readonly AppDBcontext _context;
