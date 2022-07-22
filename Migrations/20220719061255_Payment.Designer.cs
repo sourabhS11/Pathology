@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pathology.Models;
 
 namespace Pathology.Migrations
 {
     [DbContext(typeof(AppDBcontext))]
-    partial class AppDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20220719061255_Payment")]
+    partial class Payment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,9 +210,12 @@ namespace Pathology.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TransactionID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentID");
+
+                    b.HasIndex("RegisterID");
 
                     b.ToTable("Payment");
                 });
@@ -469,6 +474,15 @@ namespace Pathology.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Pathology.Models.Payment", b =>
+                {
+                    b.HasOne("Pathology.Models.Patient", "RegisterPatient")
+                        .WithMany()
+                        .HasForeignKey("RegisterID");
+
+                    b.Navigation("RegisterPatient");
                 });
 
             modelBuilder.Entity("Pathology.Models.RegisterPatient", b =>

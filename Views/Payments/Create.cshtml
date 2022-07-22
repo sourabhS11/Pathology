@@ -1,0 +1,174 @@
+﻿@model Pathology.Models.Payment
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="text-center">
+    <h1 class="justify-content-center">New Payment</h1>
+</div>
+<hr />
+<div id=" divForm">
+    <form asp-action="Create" id="form1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 justify-content-start">
+                    <div class="form-group">
+                    </div>
+                </div>
+
+                <div class="col-md-4 justify-content-center">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Patient Name</label>
+                        <input asp-for="PatientName" readonly class="form-control" value="@ViewBag.PatientName" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RegisterID" class="control-label"></label>
+                        <input asp-for="RegisterID" readonly class="form-control" value="@ViewBag.RegisterID" />
+                        <span asp-validation-for="RegisterID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Test Name</label>
+                        <input asp-for="TestName" readonly class="form-control" value="@ViewBag.TestName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Package Name</label>
+                        <input asp-for="PackageName" readonly class="form-control" value="@ViewBag.PackageName" />
+                    </div>
+                    <div class="form-group">
+                        <input id="DT" type="datetime" asp-for="PaymentDate" class="form-control" readonly hidden value=@DateTime.Now />
+                        <span asp-validation-for="PaymentDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input id="DisplayAmount" readonly asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GST" class="control-label"></label>
+                        <input id="GST" asp-for="GST" class="form-control" />
+                        <span asp-validation-for="GST" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TotalAmount" class="control-label"></label>
+                        <input id="TotalAmount" readonly asp-for="TotalAmount" class="form-control" />
+                        <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DiscountAllowed" class="control-label"></label>
+                        <input id="DiscountAllowed" asp-for="DiscountAllowed" class="form-control" />
+                        <span asp-validation-for="DiscountAllowed" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NetAmount" class="control-label"></label>
+                        <input id="NetAmount" readonly asp-for="NetAmount" class="form-control" />
+                        <span asp-validation-for="NetAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ModeOfPayment" class="control-label"></label>
+                        <select id="ModeOfPayment" asp-for="ModeOfPayment" class="form-control">
+                            <option selected disabled value="0">Choose</option>
+                            <option value="cash">Cash</option>
+                            <option value="online">Online</option>
+                        </select>
+                        <span asp-validation-for="ModeOfPayment" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TransactionID" class="control-label"></label>
+                        <input id="TransactionID" asp-for="TransactionID" class="form-control" />
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                        <input id="Create" name="Create" type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input id="Receipt" name="Receipt" type="submit" form="form1" asp-controller="Payments" asp-action="GenerateReceiptPdf" class="btn btn-primary" />
+                    </div>
+                </div>
+
+                <div class="col-md-3 justify-content-end">
+                    <div class="text-center">
+                        <Label class="control-label">@DateTime.Now.ToString("dd/MM/yyyy h:mm tt")</Label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts
+            {
+    <script>
+        $(document).ready(function () {
+            var url = window.location.pathname;
+            var id = url.substring(url.lastIndexOf('/') + 1);
+            $.getJSON("/Payments/GetAmount?id=" + id, function (data) {
+                console.log(data);
+                $("#DisplayAmount").val(data);
+            });
+        });
+    </script>
+    <script>
+        $("#GST").on("input", function () {
+            var a = parseInt($("#DisplayAmount").val());
+
+            var input = $(this);
+            var b = input.val();
+
+            if (input.data("lastval") != b) {
+                input.data("lastval", b);
+                var data = parseInt(a + (a * (b / 100)));
+                $("#TotalAmount").val(data);
+            }
+        });
+    </script>
+    <script>
+        $("#DiscountAllowed").on("input", function () {
+            var a = parseInt($("#TotalAmount").val());
+
+            var input = $(this);
+            var b = input.val();
+
+            if (input.data("lastval") != b) {
+                input.data("lastval", b);
+                var data = parseInt(a - (a * (b / 100)));
+                $("#NetAmount").val(data);
+            }
+        });
+    </script>
+    <script>
+        $("#ModeOfPayment").change(function () {
+            var v = $(this).val();
+            if (v == "cash") {
+                $("#TransactionID").attr("disabled", "disabled")
+            }
+            else {
+                $("#TransactionID").removeAttr("disabled");
+            }
+        });
+    </script>
+    <script>
+        $(function () {
+            $("form1").validate();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+                $("#Receipt").hide();
+                var $form = $('form');
+            $form.submit(function () {
+                var $btn = $(document.activeElement);
+                if (($btn).attr("name") == "Create") {
+                    $("#Create").hide(500);
+                    $("#Receipt").show(500);
+                    $.post($(this).attr('action'), $(this).serialize(), function (response) {
+                        // do something here on success
+                    }, 'json');
+                    return false;
+                }
+                });           
+            });
+        </script>
+}

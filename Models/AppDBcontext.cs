@@ -32,5 +32,7 @@ namespace Pathology.Models
         
         public DbSet<RegisterPatient> RegisterPatient { get; set; }
         
+        public DbSet<Payment> Payment { get; set; }
+        
     }
 }

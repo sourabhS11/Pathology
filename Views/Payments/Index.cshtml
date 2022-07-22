@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Pathology.Models.Payment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Payments Index</h1>
+
+<p>
+    <a asp-controller="RegisterPatients" asp-action="RegPatientSearch">Add New</a>
+</p>
+<table class="table">
+    <thead style="background-color:aqua" align="center">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentDate)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.RegisterPatient)*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModeOfPayment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GST)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountAllowed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NetAmount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentDate)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.RegisterPatient.PatientAadharID)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModeOfPayment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GST)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscountAllowed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NetAmount)
+                </td>
+                <td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="text-center">
+    <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
+</div>

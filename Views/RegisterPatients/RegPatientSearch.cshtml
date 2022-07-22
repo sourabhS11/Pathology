@@ -1,24 +1,22 @@
-﻿@model List<Pathology.Models.Patient>
-
+﻿@model List<Pathology.Models.RegisterPatient>
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "RegPatientSearch";
 }
 <div class="text-center">
-    <h1>Search Patient</h1>
+    <h1>Search Registered Patient</h1>
 </div>
 <br />
 <br />
-<form asp-controller="Patients" asp-action="PatientSearch" method="get">
+<form asp-controller="RegisterPatients" asp-action="RegPatientSearch" method="get">
     <div class="row justify-content-center">
         <div class="input-group col-md-4">
-            <input type="text" class="form-control" name="SearchTerm" />
+            <input type="date" class="form-control" name="SearchTerm" />
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">Search</button>
             </div>
         </div>
     </div>
 </form>
-<br />
 <br />
 <br />
 <br />
@@ -30,17 +28,10 @@
             <thead>
                 <tr>
                     <td align="center">
-                        Patient Not Found
+                        No Match Found
                     </td>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td align="center">
-                        <a class="btn btn-primary" asp-controller="Patients" asp-action="Create">Add New Patient</a>
-                    </td>
-                </tr>
-            </tbody>
         </table>
     }
     else
@@ -52,16 +43,16 @@
                         Patient Name
                     </th>
                     <th>
-                        Date Of Birth
+                        PackageName
                     </th>
                     <th>
-                        Patient Email
+                        TestName
                     </th>
                     <th>
-                        Patient Aadhar ID
+                        TotalAmount
                     </th>
                     <th>
-                        Register
+                        Action
                     </th>
                 </tr>
             </thead>
@@ -71,19 +62,26 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PatientName)
+                            @Html.DisplayFor(modelItem => item.Patient.PatientName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateOfBirth)
+                            @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PatientEmail)
+                            @Html.DisplayFor(modelItem => item.Package.PackageName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PatientAadharID)
+                            @Html.DisplayFor(modelItem => item.TotalAmount)
                         </td>
                         <td>
-                            <a class="btn btn-primary" asp-route-id="@item.PatientID" asp-controller="RegisterPatients" asp-action="Create">Register</a>
+                            @{var parms = new Dictionary<string, string>
+                                      {
+                                { "PatientName", item.Patient.PatientName },
+                                { "TestName", item.TestMgmt.TestName },
+                                { "PackageName", item.Package.PackageName }
+                              };
+                            }
+                            <a class="btn btn-primary" asp-all-route-data="parms" asp-route-id="@item.RegisterID" asp-controller="Payments" asp-action="Create">Go To Payment</a>
                         </td>
                     </tr>
                 }
@@ -94,4 +92,3 @@
 <div class="text-center">
     <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
 </div>
-

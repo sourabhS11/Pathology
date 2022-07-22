@@ -116,7 +116,6 @@ namespace Pathology.Controllers
             ViewData["PackageID"] = new SelectList(_context.Packages, "PackageID", "PackageName", registerPatient.PackageID);
             ViewData["PatientID"] = new SelectList(_context.Patient, "PatientID", "PatientID", registerPatient.PatientID);
             ViewData["TestId"] = new SelectList(_context.TestMgmt, "TestId", "TestName", registerPatient.TestId);
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", registerPatient.Id);
             var Id = _userService.GetUserID();
             ViewData["Id"] = Id;
             return View(registerPatient);
@@ -155,7 +154,7 @@ namespace Pathology.Controllers
             ViewData["PackageID"] = new SelectList(_context.Packages, "PackageID", "PackageDescription", registerPatient.PackageID);
             ViewData["PatientID"] = new SelectList(_context.Patient, "PatientID", "PatientAadharID", registerPatient.PatientID);
             ViewData["TestId"] = new SelectList(_context.TestMgmt, "TestId", "TestName", registerPatient.TestId);
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", registerPatient.Id);
+
             var Id = _userService.GetUserID();
             ViewData["Id"] = Id;
             return View(registerPatient);
@@ -331,6 +330,22 @@ namespace Pathology.Controllers
                 ViewBag.Message = "Email sent";
             }
             return RedirectToAction("Index");
+        }
+
+        //RegisterPatientSearch
+        public async Task<IActionResult> RegPatientSearch(DateTime SearchTerm)
+        {
+            if (SearchTerm.Year > 1)
+            {
+                var regPatients = from p in _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient).Include(r => r.TestMgmt).Include(r => r.User)
+                                   select p;
+
+                regPatients = regPatients.Where(s => s.RegDateTime.Date == SearchTerm);
+
+                return View(await regPatients.ToListAsync());
+            }
+
+            return View();
         }
     }
 }
