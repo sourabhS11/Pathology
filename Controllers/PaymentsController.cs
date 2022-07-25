@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using iText.Html2pdf;
@@ -54,7 +56,39 @@ namespace Pathology.Controllers
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
 
-                return View(payment);
+                if (regPatient.IsReportGenerated)
+                {
+                    var patient = _context.Patient.FirstOrDefault(x => x.PatientID == regPatient.PatientID);
+
+                    var email = patient.PatientEmail;
+
+                    MailMessage mm = new MailMessage();
+
+                    mm.Subject = "Report Generated";
+                    mm.Body = "Your report has been generated";
+                    mm.From = new MailAddress("icarediagnostics88@gmail.com");
+                    mm.To.Add(new MailAddress(email));
+                    mm.IsBodyHtml = false;
+
+                    MemoryStream myFile = new MemoryStream(regPatient.RoportPDF);
+                    string filetype = "Report.pdf";
+                    mm.Attachments.Add(new Attachment(myFile, filetype));
+
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential("icarediagnostics88@gmail.com", "uqvxrnivqpgannoj");
+                        //smtp.UseDefaultCredentials = true;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                        ViewBag.Message = "Email sent";
+                    }
+
+                    return View(payment);
+                }
             }
             return View(payment);
         }

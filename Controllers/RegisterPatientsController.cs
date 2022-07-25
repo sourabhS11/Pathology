@@ -315,10 +315,18 @@ namespace Pathology.Controllers
             MailMessage mm = new MailMessage();
 
             mm.Subject = "Report Generated";
-            mm.Body = "Your report has been generatrd";
+            mm.Body = "Your report has been generated";
             mm.From = new MailAddress("icarediagnostics88@gmail.com");
             mm.To.Add(new MailAddress(email));
             mm.IsBodyHtml = false;
+
+            if (registerPatient.IsPaymentDone && registerPatient.IsReportGenerated)
+            {
+                    MemoryStream myFile = new MemoryStream(registerPatient.RoportPDF);
+                    string filetype = "Report.pdf";
+                    mm.Attachments.Add(new Attachment(myFile, filetype));
+            }
+
             using (SmtpClient smtp = new SmtpClient())
             {
                 smtp.Host = "smtp.gmail.com";
