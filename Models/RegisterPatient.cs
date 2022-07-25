@@ -38,5 +38,7 @@ namespace Pathology.Models
 
         public byte[] RoportPDF { get; set; }
 
+        public bool IsPaymentDone { get; set; }
+
     }
 }

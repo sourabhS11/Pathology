@@ -30,6 +30,9 @@
             <th>
                 Registered By
             </th>
+            <th>
+                Payment
+            </th>
             <th width="200">
                 Report PDF
             </th>
@@ -41,56 +44,81 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Patient.PatientName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Package.PackageName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RegDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.fName) @item.User.lName
-                </td>
-                <td align="center">
-                    @if (item.IsReportGenerated)
-                    {
-                        <a asp-action="DownloadPdf" asp-route-id="@item.RegisterID" class="btn btn-success">Download</a>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.PatientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Package.PackageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.fName) @item.User.lName
+            </td>
+            <td>
+                @{
+                if (item.IsPaymentDone)
+                {
+                    <a>Payment Done</a>
+                }
+                else
+                {
+                    <a>Payment Not Done</a>
+                }
+            }
+            </td>
+            <td align="center">
+                @if (item.IsReportGenerated)
+                {
+                    <a asp-action="DownloadPdf" asp-route-id="@item.RegisterID" class="btn btn-success">Download</a>
 
-                        @if (!User.IsInRole("Desk Staff"))
-                        {
-                            <a asp-action="FileDelete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
-                        }
+                    @if (!User.IsInRole("Desk Staff"))
+                    {
+                        <a asp-action="FileDelete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
+                    }
+                }
+                else
+                {
+                    @if (!User.IsInRole("Desk Staff"))
+                    {
+                        <a asp-action="FileUpload" asp-route-id="@item.RegisterID" class="btn btn-primary">Upload</a>
                     }
                     else
                     {
-                        @if (!User.IsInRole("Desk Staff"))
-                        {
-                            <a asp-action="FileUpload" asp-route-id="@item.RegisterID" class="btn btn-primary">Upload</a>
-                        }
-                        else
-                        {
-                            <a>Not Uploaded</a>
-                        }
+                        <a>Not Uploaded</a>
                     }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.RegisterID" class="btn btn-primary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.RegisterID" class="btn btn-success">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RegisterID" class="btn btn-primary">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.RegisterID" class="btn btn-success">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.RegisterID" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
 <div class="text-center">
-    <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
+    @{
+        if (User.IsInRole("Associated Doctor"))
+        {
+            <a asp-controller="Account" asp-action="DashAD">Back to Dashboard</a>
+        }
+        else if (User.IsInRole("Lab Assistant"))
+        {
+            <a asp-controller="Account" asp-action="DashLA">Back to Dashboard</a>
+        }
+        else if (User.IsInRole("Desk Staff"))
+        {
+            <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
+        }
+    }
 </div>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pathology.Models;
 
 namespace Pathology.Migrations
 {
     [DbContext(typeof(AppDBcontext))]
-    partial class AppDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20220725102127_Added_ispaymentdone_to_registerPatient")]
+    partial class Added_ispaymentdone_to_registerPatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

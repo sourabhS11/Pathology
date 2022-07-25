@@ -53,5 +53,6 @@ namespace Pathology.Models
         public string TestName { get; set; }
         [NotMapped]
         public string PackageName { get; set; }
+
     }
 }

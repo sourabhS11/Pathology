@@ -340,7 +340,7 @@ namespace Pathology.Controllers
             if (SearchTerm.Year > 1)
             {
                 var regPatients = from p in _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient).Include(r => r.TestMgmt).Include(r => r.User)
-                                   select p;
+                                  select p;
 
                 regPatients = regPatients.Where(s => s.RegDateTime.Date == SearchTerm);
 

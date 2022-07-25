@@ -12,7 +12,7 @@ namespace Pathology.Models
         public int PatientID { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "only Alphabets allowed")]
+        [RegularExpression(@"^[a-zA-Z][a-zA-Z ]+$", ErrorMessage = "only Alphabets allowed")]
         public string PatientName { get; set; }
 
         [Required(ErrorMessage = "Required")]

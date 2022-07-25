@@ -75,13 +75,22 @@
                         </td>
                         <td>
                             @{var parms = new Dictionary<string, string>
-                                      {
+                                                      {
                                 { "PatientName", item.Patient.PatientName },
                                 { "TestName", item.TestMgmt.TestName },
                                 { "PackageName", item.Package.PackageName }
                               };
                             }
-                            <a class="btn btn-primary" asp-all-route-data="parms" asp-route-id="@item.RegisterID" asp-controller="Payments" asp-action="Create">Go To Payment</a>
+                            @{
+                                if (item.IsPaymentDone)
+                                {
+                                    <a>Payment Done</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-primary" asp-all-route-data="parms" asp-route-id="@item.RegisterID" asp-controller="Payments" asp-action="Create">Go To Payment</a>
+                                }
+                            }
                         </td>
                     </tr>
                 }
@@ -90,5 +99,18 @@
     }
 }
 <div class="text-center">
-    <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
+    @{
+        if (User.IsInRole("Associated Doctor"))
+        {
+            <a asp-controller="Account" asp-action="DashAD">Back to Dashboard</a>
+        }
+        else if (User.IsInRole("Lab Assistant"))
+        {
+            <a asp-controller="Account" asp-action="DashLA">Back to Dashboard</a>
+        }
+        else if (User.IsInRole("Desk Staff"))
+        {
+            <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
+        }
+    }
 </div>

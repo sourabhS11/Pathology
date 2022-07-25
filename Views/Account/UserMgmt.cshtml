@@ -82,5 +82,18 @@ else
     </div>
 }
 <div class="text-center">
-    <a asp-controller="Account" asp-action="DashAD">Back to Dashboard</a>
+    @{
+        if (User.IsInRole("Associated Doctor"))
+        {
+            <a asp-controller="Account" asp-action="DashAD">Back to Dashboard</a>
+        }
+        else if (User.IsInRole("Lab Assistant"))
+        {
+            <a asp-controller="Account" asp-action="DashLA">Back to Dashboard</a>
+        }
+        else if (User.IsInRole("Desk Staff"))
+        {
+            <a asp-controller="Account" asp-action="DashDS">Back to Dashboard</a>
+        }
+    }
 </div>

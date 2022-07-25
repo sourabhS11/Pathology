@@ -48,6 +48,9 @@ namespace Pathology.Controllers
         {
             if (ModelState.IsValid)
             {
+                var regPatient = await _context.RegisterPatient.FindAsync(payment.RegisterID);
+                regPatient.IsPaymentDone = true;
+
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
 
