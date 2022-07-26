@@ -304,6 +304,8 @@ namespace Pathology.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        //called by UploadPDF
         public IActionResult SendEmail(int RegistrationId)
         {
             var registerPatient = _context.RegisterPatient.FirstOrDefault(y => y.RegisterID == RegistrationId);
@@ -353,6 +355,20 @@ namespace Pathology.Controllers
                 regPatients = regPatients.Where(s => s.RegDateTime.Date == SearchTerm);
 
                 return View(await regPatients.ToListAsync());
+            }
+
+            return View();
+        }
+
+        //StoredProcedure
+        public async Task<IActionResult> GetRPStats(DateTime dateTime1, DateTime dateTime2)
+        {
+            if (dateTime1.Year > 1 && dateTime2.Year > 1)
+            {
+                var RegPatient = _context.RegisterPatient
+                .FromSqlRaw<RegisterPatient>("spGetRegistrationsBWdates {0}, {1}", dateTime1, dateTime2);
+
+                return View(await RegPatient.ToListAsync());
             }
 
             return View();
