@@ -1,4 +1,4 @@
-﻿@model List<Pathology.Models.RegisterPatient>
+﻿@model Pathology.ViewModels.StatisticsVM;
 @{
     ViewData["Title"] = "GetRPstats";
 }
@@ -9,10 +9,21 @@
 <br />
 <form asp-controller="RegisterPatients" asp-action="GetRPStats" method="get">
     <div class="row justify-content-center">
-        <div class="input-group col-md-4">
-            <input type="date" class="form-control" name="dateTime1" />
+        <div class="input-group col-md-8">
+            <input type="date" class="form-control" name="dateTime1"
+                   value="<%=DT1%>" />
 
-            <input type="date" class="form-control" name="dateTime2" />
+            <input type="date" class="form-control" name="dateTime2"
+                   value="@ViewBag.DateTime2" />
+
+            <br />
+            <select id="stats" class="form-control" name="selection">
+                <option selected value="1">Registered Patients</option>
+                <option value="2">Payments</option>
+                <option value="3">Patients</option>
+                <option value="4">TestId count</option>
+            </select>
+            <br />
         </div>
         <div>
             <button type="submit" class="btn btn-dark">Find</button>
@@ -24,73 +35,322 @@
 <br />
 @if (Model != null)
 {
-    @if (Model.Count == 0)
+    @if (ViewBag.Selection == 1)
     {
-        <table class="table" align="center">
-            <thead>
-                <tr>
-                    <td align="center">
-                        No Match Found
-                    </td>
-                </tr>
-            </thead>
-        </table>
-    }
-    else
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Patient ID
-                    </th>
-                    <th>
-                        Package ID
-                    </th>
-                    <th>
-                        Test ID
-                    </th>
-                    <th>
-                        TotalAmount
-                    </th>
-                    <th>
-                        Payment
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var item in Model)
-                {
+        @if (Model.RegisterPatients == null)
+        {
+            <table class="table" align="center">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PatientID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TestId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PackageID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TotalAmount)
-                        </td>
-                        <td>
-                            @{
-                                if (item.IsPaymentDone)
-                                {
-                                    <a>Payment Done</a>
-                                }
-                                else
-                                {
-                                    <a>Payment Not Done</a>
-                                }
-                            }
+                        <td align="center">
+                            No Match Found
                         </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+            </table>
+        }
+        else
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <th>
+                            Patient ID
+                        </th>
+                        <th>
+                            Package ID
+                        </th>
+                        <th>
+                            Test ID
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Payment
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.RegisterPatients)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Patient.PatientName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Package.PackageName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+                            <td>
+                                @{
+                                    if (item.IsPaymentDone)
+                                    {
+                                        <a>Payment Done</a>
+                                    }
+                                    else
+                                    {
+                                        <a>Payment Not Done</a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total No.</th>
+                        <th>@ViewBag.count</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+    @if (ViewBag.Selection == 2)
+    {
+        @if (Model.Payments == null)
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <td align="center">
+                            No Match Found
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        }
+        else
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <th>
+                            Register ID
+                        </th>
+                        <th>
+                            Paymen tDate
+                        </th>
+                        <th>
+                            Mode Of Payment
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            GST
+                        </th>
+                        <th>
+                            Total Amount
+                        </th>
+                        <th>
+                            Discount Allowed
+                        </th>
+                        <th>
+                            Net Amount
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Payments)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RegisterID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModeOfPayment)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GST)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountAllowed)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NetAmount)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total No.</th>
+                        <th>@ViewBag.count</th>
+                        <th></th>
+                        <th>@ViewBag.lastAmount</th>
+                        <th></th>
+                        <th>@ViewBag.lastTotalAmount</th>
+                        <th></th>
+                        <th>@ViewBag.lastNetAmount</th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+    @if (ViewBag.Selection == 3)
+    {
+        @if (Model.Patients == null)
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <td align="center">
+                            No Match Found
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        }
+        else
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <th>
+                            Patient Name
+                        </th>
+                        <th>
+                            Patient Email
+                        </th>
+                        <th>
+                            Patient Aadhar ID
+                        </th>
+                        <th>
+                            Date Of Birth
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Patients)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientAadharID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total No.</th>
+                        <th>@ViewBag.count</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+    @if (ViewBag.Selection == 4)
+    {
+        @if (Model.RegisterPatients == null)
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <td align="center">
+                            No Match Found
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        }
+        else
+        {
+            <table class="table" align="center">
+                <thead>
+                    <tr>
+                        <th>
+                            Patient ID
+                        </th>
+                        <th>
+                            Package ID
+                        </th>
+                        <th>
+                            Test ID
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                           
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.RegisterPatients)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Patient.PatientName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Package.PackageName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
     }
 }
 <div class="text-center">

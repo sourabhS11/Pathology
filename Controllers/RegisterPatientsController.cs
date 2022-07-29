@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -324,9 +325,9 @@ namespace Pathology.Controllers
 
             if (registerPatient.IsPaymentDone && registerPatient.IsReportGenerated)
             {
-                    MemoryStream myFile = new MemoryStream(registerPatient.RoportPDF);
-                    string filetype = "Report.pdf";
-                    mm.Attachments.Add(new Attachment(myFile, filetype));
+                MemoryStream myFile = new MemoryStream(registerPatient.RoportPDF);
+                string filetype = "Report.pdf";
+                mm.Attachments.Add(new Attachment(myFile, filetype));
             }
 
             using (SmtpClient smtp = new SmtpClient())
@@ -361,17 +362,89 @@ namespace Pathology.Controllers
         }
 
         //StoredProcedure
-        public async Task<IActionResult> GetRPStats(DateTime dateTime1, DateTime dateTime2)
+        public IActionResult GetRPStats(DateTime dateTime1, DateTime dateTime2, int selection)
         {
+            ViewBag.DateTime2 = dateTime2;
+            ViewBag.Selection = selection;
+            StatisticsVM statisticsVM = new StatisticsVM();
+
             if (dateTime1.Year > 1 && dateTime2.Year > 1)
             {
-                var RegPatient = _context.RegisterPatient
-                .FromSqlRaw<RegisterPatient>("spGetRegistrationsBWdates {0}, {1}", dateTime1, dateTime2);
+                if (selection == 1)
+                {
+                    //var RegPatient = _context.RegisterPatient
+                    //.FromSqlRaw("spRegPatFKs {0}, {1}", dateTime1, dateTime2);
 
-                return View(await RegPatient.ToListAsync());
+                    var regPatients = from p in _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient).Include(r => r.TestMgmt).Include(r => r.User)
+                                      select p;
+                    regPatients = regPatients.Where(s => s.RegDateTime.Date > dateTime1 && s.RegDateTime < dateTime2);
+
+                    statisticsVM.RegisterPatients = regPatients;
+                    int count = 0;
+                    foreach (var item in regPatients)
+                    {
+                        count++;
+                    }
+                    ViewBag.count = count;
+
+                    return View(statisticsVM);
+                }
+                else if (selection == 2)
+                {
+                    var payment = _context.Payment
+                    .FromSqlRaw<Payment>("spGetStats {0}, {1}, {2}", dateTime1, dateTime2, selection);
+
+                    statisticsVM.Payments = payment;
+                    int lastAmount = 0;
+                    int lastTotalAmount = 0;
+                    int lastNetAmount = 0;
+                    int count = 0;
+                    foreach (var item in payment)
+                    {
+                        lastAmount += item.Amount;
+                        lastTotalAmount += item.TotalAmount;
+                        lastNetAmount += item.NetAmount;
+                        count++;
+                    }
+                    ViewBag.lastAmount = lastAmount;
+                    ViewBag.lastTotalAmount = lastTotalAmount;
+                    ViewBag.lastNetAmount = lastNetAmount;
+                    ViewBag.count = count;
+
+                    return View(statisticsVM);
+                }
+                else if (selection == 3)
+                {
+                    var patient = _context.Patient
+                    .FromSqlRaw<Patient>("spGetStats {0}, {1}, {2}", dateTime1, dateTime2, selection);
+
+                    statisticsVM.Patients = patient;
+                    int count = 0;
+                    foreach (var item in patient)
+                    {
+                        count++;
+                    }
+                    ViewBag.count = count;
+
+                    return View(statisticsVM);
+                }
+                else if (selection == 4)
+                {
+                    var regPatients = from p in _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient).Include(r => r.TestMgmt).Include(r => r.User)
+                                      select p;
+
+                    var other = from x in _context.RegisterPatient.AsEnumerable().GroupBy(TestId => TestId)
+                                 .Select(g => new Other() { RP = g.Key, Count = g.Count() })
+                                select x;
+
+                    statisticsVM.RegisterPatients = regPatients;
+                    statisticsVM.Others = other;
+
+                    return View(statisticsVM);
+                }
             }
 
-            return View();
+            return View(statisticsVM);
         }
     }
 }
