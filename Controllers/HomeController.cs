@@ -139,5 +139,43 @@ namespace Pathology.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangePW()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePW(ChangePWVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return RedirectToAction("Login");
+                }
+
+                var result = await UserManager.ChangePasswordAsync(user,
+                    model.CurrentPassword, model.NewPassword);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View();
+                }
+
+                await SignInManager.RefreshSignInAsync(user);
+                return View("ChangePWmsg");
+            }
+
+            return View(model);
+        }
     }
 }

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Pathology.Models;
 using Pathology.Services;
 using Pathology.ViewModels;
@@ -428,17 +429,73 @@ namespace Pathology.Controllers
 
                     return View(statisticsVM);
                 }
+
                 else if (selection == 4)
                 {
-                    var regPatients = from p in _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient).Include(r => r.TestMgmt).Include(r => r.User)
-                                      select p;
-
-                    var other = from x in _context.RegisterPatient.AsEnumerable().GroupBy(TestId => TestId)
-                                 .Select(g => new Other() { RP = g.Key, Count = g.Count() })
-                                select x;
+                    var regPatients = _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient)
+                                      .Include(r => r.TestMgmt).Include(r => r.User)
+                                      .Where(s => s.RegDateTime.Date > dateTime1 && s.RegDateTime < dateTime2);
 
                     statisticsVM.RegisterPatients = regPatients;
-                    statisticsVM.Others = other;
+
+                    var results = regPatients.ToList().GroupBy(
+                                      p => p.TestId,
+                                      p => p.RegisterID,
+                                      (key, g) => new { TestId = key, Tests = g.ToList() });
+
+                    List<Other> tempList = new();
+
+                    foreach (var item in results)
+                    {
+                        var testN = _context.TestMgmt.Where(s => s.TestId == item.TestId).Select(c => c.TestName).FirstOrDefault();
+                        
+                        tempList.Add(
+                                    new Other() { Otherlist = item.Tests, Key = testN, Count = item.Tests.Count() }
+                                    );
+                    }
+
+                    //var other = _context.RegisterPatient.AsEnumerable().GroupBy(TestId => TestId)
+                    //             .Select(g => new Other() { Key = g.Key, Count = g.Count() });
+
+                    var other1 = _context.RegisterPatient
+                    .FromSqlRaw("spGetminmax {0}, {1}, {2}", dateTime1, dateTime2, selection);
+
+                    statisticsVM.Others = tempList;
+
+                    return View(statisticsVM);
+                }
+
+                else if (selection == 5)
+                {
+                    var regPatients = _context.RegisterPatient.Include(r => r.Package).Include(r => r.Patient)
+                                      .Include(r => r.TestMgmt).Include(r => r.User)
+                                      .Where(s => s.RegDateTime.Date > dateTime1 && s.RegDateTime < dateTime2);
+
+                    statisticsVM.RegisterPatients = regPatients;
+
+                    var results = regPatients.ToList().GroupBy(
+                                      p => p.PackageID,
+                                      p => p.RegisterID,
+                                      (key, g) => new { PackageID = key, Packages = g.ToList() });
+
+                    List<Other> tempList = new();
+
+                    foreach (var item in results)
+                    {
+                        var packageN = _context.Packages.Where(s => s.PackageID == item.PackageID).Select(c => c.PackageName).FirstOrDefault();
+
+                        tempList.Add(
+                                    new Other() { Otherlist = item.Packages, Key = packageN, Count = item.Packages.Count() }
+                                    );
+                    }
+
+                    //var other = _context.RegisterPatient.AsEnumerable().GroupBy(TestId => TestId)
+                    //             .Select(g => new Other() { Key = g.Key, Count = g.Count() });
+
+                    var other1 = _context.RegisterPatient
+                    .FromSqlRaw("spGetminmax {0}, {1}, {2}", dateTime1, dateTime2, selection);
+
+                    statisticsVM.Others = tempList;
 
                     return View(statisticsVM);
                 }

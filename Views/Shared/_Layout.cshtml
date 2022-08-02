@@ -49,6 +49,11 @@
                             <li>
                                 <a class="nav-link text-dark">Hi @User.Identity.Name</a>
                             </li>
+                            <li>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="ChangePW">
+                                    Change Password
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <form method="post">
                                     <button type="submit"  class="nav-link text-dark bg-info border-0" asp-area="" asp-controller="Home" asp-action="Logout">Logout</button>

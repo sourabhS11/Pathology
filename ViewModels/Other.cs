@@ -8,10 +8,10 @@ namespace Pathology.ViewModels
 {
     public class Other
     {
-        public int Key { get; set; }
+        public string Key { get; set; }
 
         public int Count { get; set; }
 
-        public RegisterPatient RP { get; set; }
+        public List<int> Otherlist { get; set; }
     }
 }

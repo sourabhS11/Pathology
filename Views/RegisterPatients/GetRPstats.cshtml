@@ -21,7 +21,8 @@
                 <option selected value="1">Registered Patients</option>
                 <option value="2">Payments</option>
                 <option value="3">Patients</option>
-                <option value="4">TestId count</option>
+                <option value="4">Test Popularity</option>
+                <option value="5">Package Popularity</option>
             </select>
             <br />
         </div>
@@ -278,11 +279,12 @@
             </table>
         }
     }
+
     @if (ViewBag.Selection == 4)
     {
         @if (Model.RegisterPatients == null)
         {
-            <table class="table" align="center">
+            <table class="table col-md-4" align="center">
                 <thead>
                     <tr>
                         <td align="center">
@@ -294,45 +296,32 @@
         }
         else
         {
-            <table class="table" align="center">
+            <table class="table col-md-4" align="center">
                 <thead>
                     <tr>
                         <th>
-                            Patient ID
+                            Test Name
                         </th>
                         <th>
-                            Package ID
+                            Count
                         </th>
                         <th>
-                            Test ID
-                        </th>
-                        <th>
-                            Amount
-                        </th>
-                        <th>
-                           
+
                         </th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model.RegisterPatients)
+                    @foreach (var item in Model.Others)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Patient.PatientName)
+                                @Html.DisplayFor(modelItem => item.Key)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
+                                @Html.DisplayFor(modelItem => item.Count)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Package.PackageName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TotalAmount)
-                            </td>
-                            <td>
-                               
                             </td>
                         </tr>
                     }
@@ -342,8 +331,60 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
-                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+
+    @if (ViewBag.Selection == 5)
+    {
+        @if (Model.RegisterPatients == null)
+        {
+            <table class="table col-md-4" align="center">
+                <thead>
+                    <tr>
+                        <td align="center">
+                            No Match Found
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        }
+        else
+        {
+            <table class="table col-md-4" align="center">
+                <thead>
+                    <tr>
+                        <th>
+                            Package Name
+                        </th>
+                        <th>
+                            Count
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Others)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Key)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Count)
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
                         <th></th>
                         <th></th>
                         <th></th>
