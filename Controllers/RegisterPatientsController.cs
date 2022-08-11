@@ -365,12 +365,14 @@ namespace Pathology.Controllers
         //StoredProcedure
         public IActionResult GetRPStats(DateTime dateTime1, DateTime dateTime2, int selection)
         {
-            ViewBag.DateTime2 = dateTime2;
-            ViewBag.Selection = selection;
             StatisticsVM statisticsVM = new StatisticsVM();
 
             if (dateTime1.Year > 1 && dateTime2.Year > 1)
             {
+                ViewData["DateTime1"] = dateTime1.ToString("yyyy-MM-dd");
+                ViewData["DateTime2"] = dateTime2.ToString("yyyy-MM-dd");
+                ViewBag.Selection = selection;
+
                 if (selection == 1)
                 {
                     //var RegPatient = _context.RegisterPatient

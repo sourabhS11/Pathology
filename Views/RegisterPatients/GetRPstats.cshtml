@@ -10,11 +10,9 @@
 <form asp-controller="RegisterPatients" asp-action="GetRPStats" method="get">
     <div class="row justify-content-center">
         <div class="input-group col-md-8">
-            <input type="date" class="form-control" name="dateTime1"
-                   value="<%=DT1%>" />
+            <input id="d1" type="date" class="form-control" name="dateTime1" value="@ViewData["DateTime1"]" />
 
-            <input type="date" class="form-control" name="dateTime2"
-                   value="@ViewBag.DateTime2" />
+            <input id="d2" type="date" class="form-control" name="dateTime2" value="@ViewData["DateTime2"]" />
 
             <br />
             <select id="stats" class="form-control" name="selection">
@@ -410,3 +408,4 @@
         }
     }
 </div>
+

@@ -43,10 +43,10 @@
                         Patient Name
                     </th>
                     <th>
-                        Package Name
+                        Test Name
                     </th>
                     <th>
-                        Test Name
+                        Package Name
                     </th>
                     <th>
                         Total Amount
@@ -65,32 +65,46 @@
                             @Html.DisplayFor(modelItem => item.Patient.PatientName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TestMgmt.TestName)
+                            @{
+                                if (item.TestId == null) { @:NA 
+                                }
+                                else{@Html.DisplayFor(modelItem => item.TestMgmt.TestName)}
+                            }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Package.PackageName)
+                            @{
+                                if (item.PackageID == null) { @:NA
+                                }
+                                else{@Html.DisplayFor(modelItem => item.Package.PackageName)}
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.TotalAmount)
                         </td>
                         <td>
-                            @{var parms = new Dictionary<string, string>
-                                                      {
-                                { "PatientName", item.Patient.PatientName },
-                                { "TestName", item.TestMgmt.TestName },
-                                { "PackageName", item.Package.PackageName }
-                              };
-                            }
                             @{
-                                if (item.IsPaymentDone)
+                                var tn = "NA";
+                                var pn = "NA";
+                                if (item.TestId != null) { tn = item.TestMgmt.TestName; }
+                                if (item.PackageID != null){ pn = item.Package.PackageName; }
+
+                                var parms = new Dictionary<string, string>
                                 {
-                                    <a>Payment Done</a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-primary" asp-all-route-data="parms" asp-route-id="@item.RegisterID" asp-controller="Payments" asp-action="Create">Go To Payment</a>
-                                }
+                                { "PatientName", item.Patient.PatientName },
+                                { "TestName", tn },
+                                { "PackageName", pn }
+                                };
                             }
+                                @{
+                                    if (item.IsPaymentDone)
+                                    {
+                                        <a>Payment Done</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-primary" asp-all-route-data="parms" asp-route-id="@item.RegisterID" asp-controller="Payments" asp-action="Create">Go To Payment</a>
+                                    }
+                                }
                         </td>
                     </tr>
                 }

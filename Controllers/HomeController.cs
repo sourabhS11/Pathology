@@ -171,8 +171,11 @@ namespace Pathology.Controllers
                     return View();
                 }
 
-                await SignInManager.RefreshSignInAsync(user);
-                return View("ChangePWmsg");
+                //  await SignInManager.RefreshSignInAsync(user);
+                await UserManager.UpdateSecurityStampAsync(user);
+                await SignInManager.SignOutAsync();
+
+                return RedirectToAction("Login");
             }
 
             return View(model);
